@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StepManagerBasic" Id="{093266f8-f27d-447f-8d0c-4f60d6268941}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK StepManagerBasic IMPLEMENTS IStepManager
+VAR
+	_currentStep : ENUM;
+	_requestNumber : DINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="_requestStep" Id="{631d6933-a3d4-4a04-8d8b-2defab756516}">
+      <Declaration><![CDATA[METHOD _requestStep : BOOL
+VAR_INPUT
+	nextStep : ENUM;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_requestNumber := _requestNumber + 1; 
+_currentStep := nextStep;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_reset" Id="{fb88c2f8-268f-48f3-8ad4-521cc35aeb3a}">
+      <Declaration><![CDATA[METHOD _reset : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_sequenceComplete" Id="{ff6a8092-1516-4df4-b57d-1bb9d4d5c97b}">
+      <Declaration><![CDATA[METHOD _sequenceComplete : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_requestNumber := _requestNumber + 1; 
+_currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_sequenceError" Id="{a9f4d538-abc7-4246-9047-1ad6d24ed996}">
+      <Declaration><![CDATA[METHOD _sequenceError : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_requestNumber := _requestNumber + 1; 
+_currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="currentStep" Id="{29f4d86c-54a1-42a1-8dae-2fa8be71c206}">
+      <Declaration><![CDATA[PROPERTY currentStep : ENUM
+]]></Declaration>
+      <Get Name="Get" Id="{6ff7d4db-2de2-41e3-931f-d828caaa0f1f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[currentStep := _currentStep;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="RequestNumber" Id="{56d18034-f9ba-490e-94ec-3c8b604cd6b0}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY RequestNumber : DINT
+]]></Declaration>
+      <Get Name="Get" Id="{3d104d88-59e8-4239-891c-6b40240640ee}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RequestNumber := _requestNumber;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="SequenceType" Id="{1c6f9a7b-ac96-482b-b10c-fb203e245e23}">
+    <Declaration><![CDATA[TYPE SequenceType :
+STRUCT
+	startStep : ENUM;  //The step when doStep was called
+	currentStep :ENUM;
+	lastRequestNumber : DINT;
+
+	onEntry : BOOL;
+	onExit : BOOL;
+
+	statusChecked : BOOL;
+	isDone : BOOL;
+	isAbort : BOOL;
+	isError : BOOL;
+
+	stepHandler : IStepManager;
+	activeTasks : PLCOpenCallGroup; 	
+
+	errorHandled : BOOL;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="IStepManager" Id="{89c191eb-450f-4144-a19d-873d9f6fc237}">
+    <Declaration><![CDATA[INTERFACE IStepManager
+]]></Declaration>
+    <Method Name="_requestStep" Id="{484e6cd7-60ba-4268-b695-64585da66145}">
+      <Declaration><![CDATA[METHOD _requestStep : BOOL
+VAR_INPUT
+	nextStep : ENUM;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="_reset" Id="{c44b696d-696b-4673-a947-9ec390e7c67e}">
+      <Declaration><![CDATA[METHOD _reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="_sequenceComplete" Id="{f41bcaea-5de9-45b2-807e-ba3bb516ac9c}">
+      <Declaration><![CDATA[METHOD _sequenceComplete : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="_sequenceError" Id="{346d84e2-d277-4231-a765-0b63457bf8e8}">
+      <Declaration><![CDATA[METHOD _sequenceError : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="currentStep" Id="{f549aba3-dc6c-45db-ae21-2b43a54633f2}">
+      <Declaration><![CDATA[PROPERTY currentStep : ENUM]]></Declaration>
+      <Get Name="Get" Id="{e53bfbc9-86ad-48ac-b648-09cfbdc36fb7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="RequestNumber" Id="{48610b89-952c-4a85-87b0-3a800ad674d5}">
+      <Declaration><![CDATA[PROPERTY RequestNumber : DINT]]></Declaration>
+      <Get Name="Get" Id="{562ca9eb-e252-47f1-9d0d-9ab9f5f5f405}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>
