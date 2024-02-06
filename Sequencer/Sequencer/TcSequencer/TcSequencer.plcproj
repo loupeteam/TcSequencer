@@ -55,9 +55,6 @@
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="PluginFramework">
-      <DefaultResolution>PluginFramework, * (Loupe)</DefaultResolution>
-    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
@@ -73,6 +70,10 @@
     <PlaceholderReference Include="TcCommando">
       <DefaultResolution>TcCommando, * (Loupe)</DefaultResolution>
       <Namespace>TcCommando</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcPluginFramework">
+      <DefaultResolution>TcPluginFramework, * (Loupe)</DefaultResolution>
+      <Namespace>TcPluginFramework</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
