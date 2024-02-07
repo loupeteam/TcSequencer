@@ -11,6 +11,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[OnAbort();
+OnEntry();
 RunGetsCalled();
 CurrentStep();]]></ST>
     </Implementation>
@@ -27,7 +28,7 @@ END_VAR
 	output_step := sequencer.CurrentStep;
 	AssertEquals_UDINT(Expected := 0, Actual := output_step, 'Current step shall default to 0');
 	sequencer.requestStep(2);
-	sequencer.Run();
+
 	output_step := sequencer.CurrentStep;
 	AssertEquals_UDINT(Expected := 2, Actual := output_step, 'Current step expected to be 2');
 TEST_FINISHED();]]></ST>
@@ -54,10 +55,37 @@ TEST_FINISHED();]]></ST>
       <Declaration><![CDATA[METHOD OnEntry
 VAR_INPUT
 END_VAR
-]]></Declaration>
+
+VAR
+	sequencer : Sequencer(0);
+	outputVal: BOOL;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('OnEntry');
-
+	
+	sequencer.startSequence();
+	sequencer();
+	
+	AssertTrue(Condition := sequencer.onEntry(), Message := 'onEntry should evaluate TRUE on first pass');
+	sequencer();
+	AssertFalse(Condition := sequencer.onEntry(), Message := 'onEntry should evaluate FALSE on second pass');
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnError" Id="{ceefdcc0-adb1-4ad8-928a-8e1e77a9bfee}">
+      <Declaration><![CDATA[METHOD OnError
+VAR
+	sequencer : Sequencer(0);
+	outputVal : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('SequenceOnError');
+	sequencer.sequenceError(0, 'Test Error');
+	sequencer.Run();
+	outputVal := sequencer.onError(1);
+	
+	AssertTrue(Condition := outputVal, Message := 'This is not a real test');
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
