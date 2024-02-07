@@ -234,8 +234,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-//If the current step has since the doStep
+        <ST><![CDATA[//If the current step has since the doStep
 onEntry := i_sequence.onEntry;]]></ST>
       </Implementation>
     </Method>
