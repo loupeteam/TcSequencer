@@ -16,7 +16,7 @@ VAR_INPUT
 	nextStep : ENUM;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_requestNumber := _requestNumber + 1; 
+        <ST><![CDATA[_requestNumber := _requestNumber + 1;
 _currentStep := nextStep;]]></ST>
       </Implementation>
     </Method>
