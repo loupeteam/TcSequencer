@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Sequencer_Test" Id="{5528d32b-0dad-48bc-b63b-5f76dadd2ea9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Sequencer_Test EXTENDS FB_TestSuite
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[OnAbort();
+RunGetsCalled();
+CurrentStep();]]></ST>
+    </Implementation>
+    <Method Name="CurrentStep" Id="{00c73c39-e570-45cb-8831-bed7304ddd26}">
+      <Declaration><![CDATA[METHOD CurrentStep
+VAR
+	sequencer : Sequencer(0);
+	Command : PLCOpenCommand();
+	output_step : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('CurrentStep');
+	output_step := sequencer.CurrentStep;
+	AssertEquals_UDINT(Expected := 0, Actual := output_step, 'Current step shall default to 0');
+	sequencer.requestStep(2);
+	sequencer.Run();
+	output_step := sequencer.CurrentStep;
+	AssertEquals_UDINT(Expected := 2, Actual := output_step, 'Current step expected to be 2');
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnAbort" Id="{756190d0-8aa4-4061-8aca-7e61a0ad15cd}">
+      <Declaration><![CDATA[METHOD OnAbort
+VAR
+	sequencer : Sequencer(0);
+	outputVal : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('SequenceOnError');
+	sequencer.sequenceError(0, 'Test Error');
+	sequencer.Run();
+	outputVal := sequencer.onError(1);
+	
+	AssertTrue(Condition := outputVal, Message := 'This is not a real test');
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnEntry" Id="{3a0279ba-27ed-47d6-a39c-8c9f7c30b3c2}">
+      <Declaration><![CDATA[METHOD OnEntry
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('OnEntry');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnSuccess" Id="{6a55c547-d864-42a2-86db-036e6aa1ad13}">
+      <Declaration><![CDATA[METHOD OnSuccess
+VAR_INPUT
+	sequencer : Sequencer(0);
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('OnSuccess');
+
+	//sequencer.i_sequence.activeTasks
+	// next step negative
+	//sequencer.setNextStep(-1);
+	//sequencer.onSuccess(-1);
+	
+	// next step >= 0
+
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RequestStep" Id="{b1880163-8808-4d23-8c10-95b3003a52e2}">
+      <Declaration><![CDATA[METHOD RequestStep
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('NextStep');
+//	sequencer.sequenceError(0, 'Test Error');
+//	sequencer.Run();
+//	sequencer.requestStep(1);
+//	sequencer.CurrentStep := 0;
+//	sequencer.Run();
+	
+//	outputVal := sequencer.onError(1);
+	
+//	AssertTrue(Condition := outputVal, Message := 'This is not a real test');
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RunGetsCalled" Id="{66dae229-dddb-4b20-8682-f3a53ce457fd}">
+      <Declaration><![CDATA[METHOD RunGetsCalled
+VAR
+	sequencer : Sequencer(0);
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('RunGetsCalled');
+	sequencer.Run();
+	AssertTrue(Condition := FALSE, Message := 'False Failure');
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{3d524a28-168c-402c-a8b1-706368e2797f}">
+      <Declaration><![CDATA[METHOD Start
+VAR
+	sequencer : Sequencer(0);
+	output : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Start');
+	// activeTasks.Start) = 0
+	// TODO
+	
+	//output := sequencer.i_sequence.startStep
+	
+	
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
