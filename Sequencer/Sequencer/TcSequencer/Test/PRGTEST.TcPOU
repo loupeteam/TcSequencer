@@ -4,6 +4,7 @@
     <Declaration><![CDATA[PROGRAM PRGTEST
 VAR
 	sequencer_test : FB_Sequencer_Test;
+	step_manager_test : FB_StepManagerBasic_Test;
 END_VAR
 ]]></Declaration>
     <Implementation>
