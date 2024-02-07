@@ -22,35 +22,39 @@
     <ProjectVersion>0.0.1</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\SequenceType.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\SEQUENCE_STEP.TcTLEO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\ISequence.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IStepManager.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MAIN.TcPOU">
+    <Compile Include="POUs\Sequencer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Sequence\ISequence.TcIO">
+    <Compile Include="POUs\StepManagerBasic.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Sequence\IStepManager.TcIO">
+    <Compile Include="Test\FB_Sequencer_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Sequence\Sequencer.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sequence\SequenceType.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sequence\SEQUENCE_STEP.TcTLEO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sequence\StepManagerBasic.TcPOU">
+    <Compile Include="Test\PRGTEST.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="Sequence" />
+    <Folder Include="Interfaces" />
+    <Folder Include="Test" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
@@ -74,6 +78,9 @@
     <PlaceholderReference Include="TcPluginFramework">
       <DefaultResolution>TcPluginFramework, * (Loupe)</DefaultResolution>
       <Namespace>TcPluginFramework</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
