@@ -26,8 +26,7 @@ END_VAR
       <Declaration><![CDATA[METHOD Aborted : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-i_sequence.activeTasks.Aborted();]]></ST>
+        <ST><![CDATA[i_sequence.activeTasks.Aborted();]]></ST>
       </Implementation>
     </Method>
     <Method Name="AbortPreviousCommands" Id="{3e8b5447-d796-4ea8-80c7-2c28a2a20125}" FolderPath="PLCOpenCommand\">
@@ -50,10 +49,8 @@ VAR
 	_anyError : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-IF NOT i_sequence.statusChecked THEN
-	//We cache the is abort so that we have a consistent 
-	//	status for the whole state
+        <ST><![CDATA[IF NOT i_sequence.statusChecked THEN
+	// Cache the abort so there's a consistent status for the whole state
 	i_sequence.isError := i_sequence.activeTasks.isError;
 	i_sequence.isAbort := i_sequence.activeTasks.isAbort;
 	i_sequence.isDone := i_sequence.activeTasks.isDone;
