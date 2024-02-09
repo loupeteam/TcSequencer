@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1">
   <Itf Name="ISequence" Id="{ec403192-db1e-410a-9f94-aa5afd69329b}">
     <Declaration><![CDATA[INTERFACE ISequence
 ]]></Declaration>
