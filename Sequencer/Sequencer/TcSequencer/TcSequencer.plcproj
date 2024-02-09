@@ -6,7 +6,7 @@
     <ProjectGuid>{f7a1cbd8-4647-4a25-ae48-f05a03f87b99}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
-    <WriteProductVersion>true</WriteProductVersion>
+    <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>TcSequencer</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
@@ -20,6 +20,7 @@
     <Released>false</Released>
     <Title>TcSequencer</Title>
     <ProjectVersion>0.0.1</ProjectVersion>
+    <CombineIds>true</CombineIds>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\SequenceType.TcDUT">
