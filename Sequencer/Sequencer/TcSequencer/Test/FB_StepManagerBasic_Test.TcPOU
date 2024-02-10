@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_StepManagerBasic_Test" Id="{f2f4fe9e-d358-482a-b327-02ec29657bd0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StepManagerBasic_Test EXTENDS FB_TestSuite
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RequestStep();
+Reset();
+]]></ST>
+    </Implementation>
+    <Method Name="RequestStep" Id="{198c2120-5857-4c31-b6b8-c5eeca56d028}">
+      <Declaration><![CDATA[METHOD RequestStep
+VAR
+	step_manager : StepManagerBasic();
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('RequestStep');
+	step_manager._requestStep(2);
+	AssertEquals_UDINT(Expected := 2, Actual := step_manager.currentStep, 'Current Step shall be requested step');
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{f87175cc-f817-48db-aeb6-5cea267ae2ed}">
+      <Declaration><![CDATA[METHOD Reset
+VAR
+	step_manager : StepManagerBasic();
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Reset');
+	step_manager._requestStep(20);
+	AssertEquals_UDINT(Expected := 20, Actual := step_manager.currentStep, 'Confirm current step is not default');
+	
+	step_manager._reset();
+	AssertEquals_UDINT(Expected := SEQUENCE_STEP.NO_STEP, Actual := step_manager.currentStep, 'Reset should have put current step back to default');
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
