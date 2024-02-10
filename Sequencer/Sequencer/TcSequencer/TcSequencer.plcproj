@@ -19,8 +19,18 @@
     <Company>Loupe</Company>
     <Released>false</Released>
     <Title>TcSequencer</Title>
-    <ProjectVersion>0.0.1</ProjectVersion>
+    <ProjectVersion>0.0.2</ProjectVersion>
     <CombineIds>true</CombineIds>
+    <LibraryCategories>
+      <LibraryCategory xmlns="">
+        <Id>{09904977-c10b-4290-b9fa-0485eee86e1c}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>Loupe</DefaultName>
+      </LibraryCategory>
+    </LibraryCategories>
+    <SelectedLibraryCategories>
+      <Id xmlns="">{09904977-c10b-4290-b9fa-0485eee86e1c}</Id>
+    </SelectedLibraryCategories>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\SequenceType.TcDUT">
