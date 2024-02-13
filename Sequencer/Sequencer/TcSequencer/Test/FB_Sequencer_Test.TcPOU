@@ -19,9 +19,9 @@ CurrentAndRequestStep();]]></ST>
     <Method Name="CurrentAndRequestStep" Id="{00c73c39-e570-45cb-8831-bed7304ddd26}">
       <Declaration><![CDATA[METHOD CurrentAndRequestStep
 VAR
-	sequencer : Sequencer(0);
-	Command : PLCOpenCommand();
-	step : UDINT;
+    sequencer : Sequencer(0);
+    Command : PLCOpenCommand();
+    step : UDINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -45,8 +45,8 @@ TEST_FINISHED();]]></ST>
     <Method Name="OnAbort" Id="{756190d0-8aa4-4061-8aca-7e61a0ad15cd}">
       <Declaration><![CDATA[METHOD OnAbort
 VAR
-	sequencer : Sequencer(0);
-	outputVal : BOOL;
+    sequencer : Sequencer(0);
+    outputVal : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -69,8 +69,8 @@ VAR_INPUT
 END_VAR
 
 VAR
-	sequencer : Sequencer(0);
-	outputVal: BOOL;
+    sequencer : Sequencer(0);
+    outputVal : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
@@ -91,8 +91,8 @@ TEST_FINISHED();]]></ST>
     <Method Name="OnError" Id="{ceefdcc0-adb1-4ad8-928a-8e1e77a9bfee}">
       <Declaration><![CDATA[METHOD OnError
 VAR
-	sequencer : Sequencer(0);
-	outputVal : BOOL;
+    sequencer : Sequencer(0);
+    outputVal : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -112,7 +112,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="OnSuccess" Id="{6a55c547-d864-42a2-86db-036e6aa1ad13}">
       <Declaration><![CDATA[METHOD OnSuccess
 VAR_INPUT
-	sequencer : Sequencer(0);
+    sequencer : Sequencer(0);
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -136,8 +136,8 @@ TEST_FINISHED();]]></ST>
     <Method Name="Start" Id="{3d524a28-168c-402c-a8b1-706368e2797f}">
       <Declaration><![CDATA[METHOD Start
 VAR
-	sequencer : Sequencer(0);
-	output : BOOL;
+    sequencer : Sequencer(0);
+    output : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
