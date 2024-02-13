@@ -10,7 +10,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[OnAbort();
+      <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+OnAbort();
 OnEntry();
 CurrentAndRequestStep();]]></ST>
     </Implementation>
@@ -23,7 +25,11 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('CurrentAndRequestStep');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('CurrentAndRequestStep');
 	AssertEquals_UDINT(Expected := 0, Actual := sequencer.CurrentStep, Message := 'Current step shall default to 0');
 	
 	step := 2;
@@ -44,7 +50,11 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('SequenceOnError');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('SequenceOnError');
 	sequencer.requestStep(1);
 	// setup abort
 	sequencer.i_sequence.isAbort := 1;
@@ -63,7 +73,11 @@ VAR
 	outputVal: BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('OnEntry');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('OnEntry');
 	
 	sequencer.startSequence();
 	sequencer.doStep();
@@ -82,7 +96,11 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('SequenceOnError');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('SequenceOnError');
 	sequencer.sequenceError(0, 'Test Error');
 	sequencer.Run();
 	outputVal := sequencer.onError(1);
@@ -98,7 +116,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('OnSuccess');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('OnSuccess');
 
 	//sequencer.i_sequence.activeTasks
 	// next step negative
@@ -119,14 +141,17 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('Start');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('Start');
 	// activeTasks.Start) = 0
 	// TODO
 	
 	//output := sequencer.i_sequence.startStep
 	
 	
-
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>

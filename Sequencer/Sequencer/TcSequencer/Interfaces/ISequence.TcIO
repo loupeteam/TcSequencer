@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="ISequence" Id="{ec403192-db1e-410a-9f94-aa5afd69329b}">
     <Declaration><![CDATA[INTERFACE ISequence
-]]></Declaration>
+// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.]]></Declaration>
     <Folder Name="callbacks" Id="{3d1e23ba-0316-470f-8744-3aa607d72bad}" />
     <Folder Name="StateControl" Id="{daaf35c2-6411-4d82-aef2-a15497701697}" />
     <Property Name="CurrentStep" Id="{d83302e6-d8e8-46af-86eb-9a1fd884af7b}">

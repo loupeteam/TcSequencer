@@ -8,7 +8,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[TcUnit.RUN();]]></ST>
+      <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+TcUnit.RUN();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

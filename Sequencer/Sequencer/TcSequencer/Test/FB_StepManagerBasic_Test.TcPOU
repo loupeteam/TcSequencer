@@ -10,7 +10,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[RequestStep();
+      <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+RequestStep();
 Reset();
 ]]></ST>
     </Implementation>
@@ -21,7 +23,9 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('RequestStep');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+TEST('RequestStep');
 	step_manager._requestStep(2);
 	AssertEquals_UDINT(Expected := 2, Actual := step_manager.currentStep, 'Current Step shall be requested step');
 TEST_FINISHED();]]></ST>
@@ -34,7 +38,9 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('Reset');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+TEST('Reset');
 	step_manager._requestStep(20);
 	AssertEquals_UDINT(Expected := 20, Actual := step_manager.currentStep, 'Confirm current step is not default');
 	
