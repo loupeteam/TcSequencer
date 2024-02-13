@@ -25,6 +25,8 @@ END_VAR
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
+(*STweep.Disable*)
+
 TEST('RequestStep');
 	step_manager._requestStep(2);
 	AssertEquals_UDINT(Expected := 2, Actual := step_manager.currentStep, 'Current Step shall be requested step');
@@ -39,6 +41,8 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
 
 TEST('Reset');
 	step_manager._requestStep(20);
