@@ -19,7 +19,7 @@ Reset();
     <Method Name="RequestStep" Id="{198c2120-5857-4c31-b6b8-c5eeca56d028}">
       <Declaration><![CDATA[METHOD RequestStep
 VAR
-	step_manager : StepManagerBasic();
+    step_manager : StepManagerBasic();
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -36,7 +36,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="Reset" Id="{f87175cc-f817-48db-aeb6-5cea267ae2ed}">
       <Declaration><![CDATA[METHOD Reset
 VAR
-	step_manager : StepManagerBasic();
+    step_manager : StepManagerBasic();
 END_VAR
 ]]></Declaration>
       <Implementation>
