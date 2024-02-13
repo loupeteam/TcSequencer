@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="ISequence" Id="{ec403192-db1e-410a-9f94-aa5afd69329b}">
     <Declaration><![CDATA[INTERFACE ISequence
-]]></Declaration>
+// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.]]></Declaration>
     <Folder Name="callbacks" Id="{3d1e23ba-0316-470f-8744-3aa607d72bad}" />
     <Folder Name="StateControl" Id="{daaf35c2-6411-4d82-aef2-a15497701697}" />
     <Property Name="CurrentStep" Id="{d83302e6-d8e8-46af-86eb-9a1fd884af7b}">
@@ -16,13 +16,12 @@ PROPERTY CurrentStep : ENUM]]></Declaration>
       <Declaration><![CDATA[METHOD doStep : ENUM
 VAR
 END_VAR
-
 ]]></Declaration>
     </Method>
     <Method Name="onAbort" Id="{4445ff1a-fbfc-4467-ae59-52d6282d62cc}" FolderPath="callbacks\">
       <Declaration><![CDATA[METHOD onAbort : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
@@ -35,7 +34,7 @@ END_VAR
     <Method Name="onError" Id="{bcf3cc66-e294-4626-a88a-229a42065635}" FolderPath="callbacks\">
       <Declaration><![CDATA[METHOD onError : BOOL
 VAR_INPUT
-	nextStep : ENUM;	
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
@@ -48,36 +47,36 @@ END_VAR
     <Method Name="onFailure" Id="{0fd686e6-f999-4918-9b3d-8a51abb3cd5a}" FolderPath="callbacks\">
       <Declaration><![CDATA[METHOD onFailure : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="onSuccess" Id="{82c8d03a-450e-4fab-9845-0d89e2f94a52}" FolderPath="callbacks\">
       <Declaration><![CDATA[METHOD onSuccess : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="requestStep" Id="{eda50567-af34-458e-89ce-ac3a3abf3610}" FolderPath="StateControl\">
       <Declaration><![CDATA[METHOD requestStep : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="requestStepClear" Id="{e59012ec-24ed-47da-8aaf-87ba4a553cbc}" FolderPath="StateControl\">
       <Declaration><![CDATA[METHOD requestStepClear : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="sequenceAbort" Id="{53bba82b-ae56-4f65-8efe-cc2958f21910}" FolderPath="StateControl\">
       <Declaration><![CDATA[METHOD sequenceAbort : BOOL
 VAR_INPUT
-	ErrorCode : DINT;
-	ErrorMessage: STRING;
+    ErrorCode : DINT;
+    ErrorMessage : STRING;
 END_VAR
 ]]></Declaration>
     </Method>
@@ -90,8 +89,8 @@ END_VAR
     <Method Name="sequenceError" Id="{efd40ff7-83f9-47af-a16c-c4732fe53c27}" FolderPath="StateControl\">
       <Declaration><![CDATA[METHOD sequenceError : BOOL
 VAR_INPUT
-	ErrorCode : DINT;
-	ErrorMessage: STRING;
+    ErrorCode : DINT;
+    ErrorMessage : STRING;
 END_VAR
 ]]></Declaration>
     </Method>

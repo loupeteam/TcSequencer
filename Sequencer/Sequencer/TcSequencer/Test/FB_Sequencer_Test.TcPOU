@@ -10,20 +10,26 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[OnAbort();
+      <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+OnAbort();
 OnEntry();
 CurrentAndRequestStep();]]></ST>
     </Implementation>
     <Method Name="CurrentAndRequestStep" Id="{00c73c39-e570-45cb-8831-bed7304ddd26}">
       <Declaration><![CDATA[METHOD CurrentAndRequestStep
 VAR
-	sequencer : Sequencer(0);
-	Command : PLCOpenCommand();
-	step : UDINT;
+    sequencer : Sequencer(0);
+    Command : PLCOpenCommand();
+    step : UDINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('CurrentAndRequestStep');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('CurrentAndRequestStep');
 	AssertEquals_UDINT(Expected := 0, Actual := sequencer.CurrentStep, Message := 'Current step shall default to 0');
 	
 	step := 2;
@@ -39,12 +45,16 @@ TEST_FINISHED();]]></ST>
     <Method Name="OnAbort" Id="{756190d0-8aa4-4061-8aca-7e61a0ad15cd}">
       <Declaration><![CDATA[METHOD OnAbort
 VAR
-	sequencer : Sequencer(0);
-	outputVal : BOOL;
+    sequencer : Sequencer(0);
+    outputVal : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('SequenceOnError');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('SequenceOnError');
 	sequencer.requestStep(1);
 	// setup abort
 	sequencer.i_sequence.isAbort := 1;
@@ -59,11 +69,15 @@ VAR_INPUT
 END_VAR
 
 VAR
-	sequencer : Sequencer(0);
-	outputVal: BOOL;
+    sequencer : Sequencer(0);
+    outputVal : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('OnEntry');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('OnEntry');
 	
 	sequencer.startSequence();
 	sequencer.doStep();
@@ -77,12 +91,16 @@ TEST_FINISHED();]]></ST>
     <Method Name="OnError" Id="{ceefdcc0-adb1-4ad8-928a-8e1e77a9bfee}">
       <Declaration><![CDATA[METHOD OnError
 VAR
-	sequencer : Sequencer(0);
-	outputVal : BOOL;
+    sequencer : Sequencer(0);
+    outputVal : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('SequenceOnError');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('SequenceOnError');
 	sequencer.sequenceError(0, 'Test Error');
 	sequencer.Run();
 	outputVal := sequencer.onError(1);
@@ -94,11 +112,15 @@ TEST_FINISHED();]]></ST>
     <Method Name="OnSuccess" Id="{6a55c547-d864-42a2-86db-036e6aa1ad13}">
       <Declaration><![CDATA[METHOD OnSuccess
 VAR_INPUT
-	sequencer : Sequencer(0);
+    sequencer : Sequencer(0);
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('OnSuccess');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('OnSuccess');
 
 	//sequencer.i_sequence.activeTasks
 	// next step negative
@@ -114,19 +136,22 @@ TEST_FINISHED();]]></ST>
     <Method Name="Start" Id="{3d524a28-168c-402c-a8b1-706368e2797f}">
       <Declaration><![CDATA[METHOD Start
 VAR
-	sequencer : Sequencer(0);
-	output : BOOL;
+    sequencer : Sequencer(0);
+    output : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TEST('Start');
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+(*STweep.Disable*)
+
+TEST('Start');
 	// activeTasks.Start) = 0
 	// TODO
 	
 	//output := sequencer.i_sequence.startStep
 	
 	
-
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>

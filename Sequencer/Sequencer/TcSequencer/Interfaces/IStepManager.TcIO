@@ -2,11 +2,11 @@
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="IStepManager" Id="{89c191eb-450f-4144-a19d-873d9f6fc237}">
     <Declaration><![CDATA[INTERFACE IStepManager
-]]></Declaration>
+// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.]]></Declaration>
     <Method Name="_requestStep" Id="{484e6cd7-60ba-4268-b695-64585da66145}">
       <Declaration><![CDATA[METHOD _requestStep : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>

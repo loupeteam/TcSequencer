@@ -3,16 +3,17 @@
   <POU Name="Sequencer" Id="{6cce11bf-bf75-4b96-8542-c7369e25211e}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPLCOpenCall, IPlugin, IPLCOpenCommand
 VAR
-	i_sequence : SequenceType;
-	startStep : ENUM;
-	forceStart : BOOL;
-	forceDone : BOOL;
-	forceError : BOOL;	
-	baseManager : StepManagerBasic;
+    i_sequence : SequenceType;
+    startStep : ENUM;
+    forceStart : BOOL;
+    forceDone : BOOL;
+    forceError : BOOL;
+    baseManager : StepManagerBasic;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+]]></ST>
     </Implementation>
     <Folder Name="API" Id="{939f7e8c-9d25-4182-9029-745e8da56e72}">
       <Folder Name="Decisions" Id="{877b3894-7f7e-462b-b8bc-c682c2070163}" />
@@ -26,34 +27,40 @@ END_VAR
       <Declaration><![CDATA[METHOD Aborted : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_sequence.activeTasks.Aborted();]]></ST>
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+i_sequence.activeTasks.Aborted();]]></ST>
       </Implementation>
     </Method>
     <Method Name="AbortPreviousCommands" Id="{3e8b5447-d796-4ea8-80c7-2c28a2a20125}" FolderPath="PLCOpenCommand\">
       <Declaration><![CDATA[{warning 'add method implementation '}
 METHOD AbortPreviousCommands : BOOL
 VAR_INPUT
-	newCommand	: IPLCOpenCommand;
+    newCommand : IPLCOpenCommand;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="checkStatus" Id="{6b7c3f12-8739-4096-9480-9fa604b0d507}" FolderPath="PLCOpenCaller\">
       <Declaration><![CDATA[METHOD PRIVATE checkStatus : BOOL
 VAR
-	_commandIndex : INT;
-	_anyAbort : BOOL;
-	_anyBusy : BOOL;
-	_anyError : BOOL;
+    _commandIndex : INT;
+    _anyAbort : BOOL;
+    _anyBusy : BOOL;
+    _anyError : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT i_sequence.statusChecked THEN
-	// Cache the abort so there's a consistent status for the whole state
-	i_sequence.isError := i_sequence.activeTasks.isError;
-	i_sequence.isAbort := i_sequence.activeTasks.isAbort;
-	i_sequence.isDone := i_sequence.activeTasks.isDone;
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+IF NOT i_sequence.statusChecked THEN
+    // Cache the abort so there's a consistent status for the whole state
+    i_sequence.isError := i_sequence.activeTasks.isError;
+    i_sequence.isAbort := i_sequence.activeTasks.isAbort;
+    i_sequence.isDone := i_sequence.activeTasks.isDone;
 END_IF
 ]]></ST>
       </Implementation>
@@ -67,7 +74,9 @@ PROPERTY Consume : BOOL
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -78,7 +87,9 @@ PROPERTY CurrentStep : ENUM]]></Declaration>
         <Declaration><![CDATA[
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[currentStep := i_sequence.stepHandler.currentStep;]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+currentStep := i_sequence.stepHandler.currentStep;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -86,24 +97,26 @@ PROPERTY CurrentStep : ENUM]]></Declaration>
       <Declaration><![CDATA[METHOD doStep : ENUM
 VAR
 END_VAR
-
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF forceStart THEN
-	forceStart := FALSE;
-	i_sequence.stepHandler._requestStep(startStep);
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+IF forceStart THEN
+    forceStart := FALSE;
+    i_sequence.stepHandler._requestStep(startStep);
 END_IF
 
 i_sequence.currentStep := i_sequence.stepHandler.currentStep;
+
 //If the current step has changed,
 //	Set the flag for onEntry()
 IF i_sequence.stepHandler.RequestNumber <> i_sequence.lastRequestNumber THEN
-	
-	i_sequence.lastRequestNumber := i_sequence.stepHandler.RequestNumber;
-	i_sequence.onEntry := TRUE;
-	i_sequence.onExit := FALSE;
+
+    i_sequence.lastRequestNumber := i_sequence.stepHandler.RequestNumber;
+    i_sequence.onEntry := TRUE;
+    i_sequence.onExit := FALSE;
 ELSE
-	i_sequence.onEntry := FALSE;	
+    i_sequence.onEntry := FALSE;
 END_IF
 
 //The start step is used to detect if the 
@@ -115,21 +128,23 @@ i_sequence.statusChecked := FALSE;
 i_sequence.errorHandled := FALSE;
 
 IF i_sequence.onExit THEN
-	doStep := SEQUENCE_STEP.NO_STEP;
-ELSE		
-	//Return the state
-	doStep := i_sequence.currentStep;
+    doStep := SEQUENCE_STEP.NO_STEP;
+ELSE
+    //Return the state
+    doStep := i_sequence.currentStep;
 END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Errored" Id="{d625b5cc-7ecf-4617-9302-d9a3a7aca5f7}" FolderPath="PLCOpenCaller\">
       <Declaration><![CDATA[METHOD Errored : BOOL
 VAR_INPUT
-	ID	: INT;
+    ID : INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_sequence.activeTasks.Errored(ID);]]></ST>
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+i_sequence.activeTasks.Errored(ID);]]></ST>
       </Implementation>
     </Method>
     <Property Name="Execute" Id="{70b56461-1624-4c81-b1ce-428ab1a7951c}" FolderPath="PLCOpenCommand\">
@@ -141,23 +156,27 @@ PROPERTY Execute : BOOL
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Method Name="FB_init" Id="{f87966c2-0adb-4c01-87f6-71b336bb9cc0}">
       <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
-	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
-	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	stepHandler : IStepManager;
+    bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+    bInCopyCode : BOOL; // if TRUE, the instance afterwards gets moved into the copy code (online change)
+    stepHandler : IStepManager;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF stepHandler = 0 THEN
-	i_sequence.stepHandler := baseManager;
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+IF stepHandler = 0 THEN
+    i_sequence.stepHandler := baseManager;
 ELSE
-	i_sequence.stepHandler := stepHandler;
+    i_sequence.stepHandler := stepHandler;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -165,7 +184,9 @@ END_IF]]></ST>
       <Declaration><![CDATA[METHOD Finished : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_sequence.activeTasks.Finished();
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+i_sequence.activeTasks.Finished();
 ]]></ST>
       </Implementation>
     </Method>
@@ -174,7 +195,9 @@ END_IF]]></ST>
       <Get Name="Get" Id="{06516dd3-b590-4e87-bf5f-fded754e45e8}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
-          <ST><![CDATA[checkStatus();
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+checkStatus();
 isAbort := i_sequence.isAbort;]]></ST>
         </Implementation>
       </Get>
@@ -184,7 +207,9 @@ isAbort := i_sequence.isAbort;]]></ST>
       <Get Name="Get" Id="{0c5d4645-ee28-4cc6-87d7-b772cfb09f31}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
-          <ST><![CDATA[checkStatus();
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+checkStatus();
 isDone := i_sequence.isDone;]]></ST>
         </Implementation>
       </Get>
@@ -192,7 +217,9 @@ isDone := i_sequence.isDone;]]></ST>
     <Property Name="isError" Id="{45d11189-3838-46ca-97d2-70f9988c183a}" FolderPath="PLCOpenCaller\">
       <Declaration><![CDATA[PROPERTY isError : BOOL]]></Declaration>
       <Get Name="Get" Id="{8849948e-45c2-441d-abda-6c306a83e77e}">
-        <Declaration><![CDATA[VAR
+        <Declaration><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
@@ -204,64 +231,72 @@ isError := i_sequence.isError;]]></ST>
     <Method Name="onAbort" Id="{124a7554-7af0-48f3-9c3b-c6fcfb012c1a}" FolderPath="API\Decisions\">
       <Declaration><![CDATA[METHOD onAbort : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Check all of the status to see if we are aborting
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+// Check all of the status to see if we are aborting
 
 IF isAbort THEN
 
-	IF nextStep >= 0 THEN
-		LogMessage( 1, 'Step Abort');
-		i_sequence.errorHandled := TRUE;
-		setNextStep( nextStep );
-	END_IF
+    IF nextStep >= 0 THEN
+        LogMessage(1, 'Step Abort');
+        i_sequence.errorHandled := TRUE;
+        setNextStep(nextStep);
+    END_IF
 
-	onAbort := TRUE;
+    onAbort := TRUE;
 ELSE
-	onAbort := FALSE;		
+    onAbort := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="onEntry" Id="{d5293258-9127-40f2-8767-4af37daea8dd}" FolderPath="API\StateTransition\">
       <Declaration><![CDATA[METHOD onEntry : BOOL
 VAR
-	sequencer : Sequencer(0);
+    sequencer : Sequencer(0);
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//If the current step has since the doStep
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+//If the current step has since the doStep
 onEntry := i_sequence.onEntry;]]></ST>
       </Implementation>
     </Method>
     <Method Name="onError" Id="{2b381ad0-9511-4a2a-a59b-89ff6fa0eadc}" FolderPath="API\Decisions\">
       <Declaration><![CDATA[METHOD onError : BOOL
 VAR_INPUT
-	nextStep : ENUM;	
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF isError THEN
-	IF nextStep >= 0 THEN
-		LogMessage( 1, 'Step Abort');
-		i_sequence.errorHandled := TRUE;
-		setNextStep( nextStep );
-	END_IF
-	onError := TRUE;
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+IF isError THEN
+    IF nextStep >= 0 THEN
+        LogMessage(1, 'Step Abort');
+        i_sequence.errorHandled := TRUE;
+        setNextStep(nextStep);
+    END_IF
+
+    onError := TRUE;
 ELSE
-	onError := FALSE;		
+    onError := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="onExit" Id="{f59d2d40-7d9d-447e-9f98-0b5c912393f5}" FolderPath="API\StateTransition\">
       <Declaration><![CDATA[METHOD onExit : BOOL
 VAR
-	sequencer : Sequencer(0);
+    sequencer : Sequencer(0);
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
 //If the current step has since the doStep
 onExit := i_sequence.onExit;
 ]]></ST>
@@ -270,39 +305,43 @@ onExit := i_sequence.onExit;
     <Method Name="onFailure" Id="{8864cad6-d51a-434b-b76a-3fb1f56e20e0}" FolderPath="API\Decisions\">
       <Declaration><![CDATA[METHOD onFailure : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF i_sequence.activeTasks.isAbort OR i_sequence.activeTasks.isError THEN
-	//On failure will not set the step if a more specific handler already set the step
-	IF i_sequence.errorHandled = FALSE AND nextStep >= 0 THEN
-		LogMessage( 1, 'Step Failure');
-		setNextStep( nextStep );
-	END_IF
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-	onFailure := TRUE;
+IF i_sequence.activeTasks.isAbort OR i_sequence.activeTasks.isError THEN
+    //On failure will not set the step if a more specific handler already set the step
+    IF i_sequence.errorHandled = FALSE AND nextStep >= 0 THEN
+        LogMessage(1, 'Step Failure');
+        setNextStep(nextStep);
+    END_IF
+
+    onFailure := TRUE;
 ELSE
-	onFailure := FALSE;		
+    onFailure := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="onSuccess" Id="{2bf2939a-63ed-4f80-94f9-d2fc5becbe2f}" FolderPath="API\Decisions\">
       <Declaration><![CDATA[METHOD onSuccess : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF i_sequence.activeTasks.isDone THEN
-	IF nextStep >= 0 THEN
-		LogMessage( 1, 'Step Success');
-		setNextStep( nextStep );
-	END_IF
-	
-	onSuccess := TRUE;
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+IF i_sequence.activeTasks.isDone THEN
+    IF nextStep >= 0 THEN
+        LogMessage(1, 'Step Success');
+        setNextStep(nextStep);
+    END_IF
+
+    onSuccess := TRUE;
 ELSE
-	onSuccess := FALSE;		
+    onSuccess := FALSE;
 END_IF
 ]]></ST>
       </Implementation>
@@ -311,11 +350,13 @@ END_IF
       <Declaration><![CDATA[{warning 'add method implementation '}
 METHOD registerGroup : BOOL
 VAR_INPUT
-	group	: IPLCOpenGroup;
+    group : IPLCOpenGroup;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Remote" Id="{1baaa5db-8663-490c-a646-fa9e05570894}" FolderPath="PLCOpenCommand\">
@@ -327,7 +368,9 @@ PROPERTY Remote : IPLCOpenCall
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{31e61a2d-913f-4239-9a66-18b9d961f4c3}">
@@ -335,18 +378,22 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Method Name="requestStep" Id="{b48e0562-c987-4989-8061-de7cf0c6fe2a}" FolderPath="API\StateControl\">
       <Declaration><![CDATA[METHOD requestStep : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_sequence.stepHandler._requestStep(nextStep);
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+i_sequence.stepHandler._requestStep(nextStep);
 i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
@@ -354,11 +401,13 @@ i_sequence.onExit := TRUE;
     <Method Name="requestStepClear" Id="{a486ef5e-3d7c-419f-8255-b0a39dabc8fc}" FolderPath="API\StateControl\">
       <Declaration><![CDATA[METHOD requestStepClear : BOOL
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[requestStep(nextStep);
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+requestStep(nextStep);
 i_sequence.activeTasks.resetCommands();]]></ST>
       </Implementation>
     </Method>
@@ -366,18 +415,22 @@ i_sequence.activeTasks.resetCommands();]]></ST>
       <Declaration><![CDATA[METHOD Run : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^();]]></ST>
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+THIS^();]]></ST>
       </Implementation>
     </Method>
     <Method Name="sequenceAbort" Id="{cc629ce3-ace3-4ca4-872b-7b49e09a5e57}" FolderPath="API\StateControl\">
       <Declaration><![CDATA[METHOD sequenceAbort : BOOL
 VAR_INPUT
-	ErrorCode : DINT;
-	ErrorMessage: STRING;
+    ErrorCode : DINT;
+    ErrorMessage : STRING;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_sequence.stepHandler._sequenceError();
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+i_sequence.stepHandler._sequenceError();
 i_sequence.activeTasks.resetCommands();
 i_sequence.onExit := TRUE;
 ]]></ST>
@@ -389,7 +442,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_sequence.stepHandler._sequenceComplete();
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+i_sequence.stepHandler._sequenceComplete();
 i_sequence.activeTasks.resetCommands();
 i_sequence.onExit := TRUE;
 ]]></ST>
@@ -398,12 +453,14 @@ i_sequence.onExit := TRUE;
     <Method Name="sequenceError" Id="{06555983-6dc8-4375-b176-7e8590c26dcd}" FolderPath="API\StateControl\">
       <Declaration><![CDATA[METHOD sequenceError : BOOL
 VAR_INPUT
-	ErrorCode : DINT;
-	ErrorMessage: STRING;
+    ErrorCode : DINT;
+    ErrorMessage : STRING;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_sequence.stepHandler._sequenceError();
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+i_sequence.stepHandler._sequenceError();
 i_sequence.activeTasks.resetCommands();
 i_sequence.onExit := TRUE;
 ]]></ST>
@@ -412,29 +469,33 @@ i_sequence.onExit := TRUE;
     <Method Name="setNextStep" Id="{c0c17481-86c4-4051-a78b-3b1ee372be58}" FolderPath="internal\">
       <Declaration><![CDATA[METHOD PROTECTED setNextStep
 VAR_INPUT
-	nextStep : ENUM;
+    nextStep : ENUM;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[i_sequence.stepHandler._requestStep(nextStep);
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+i_sequence.stepHandler._requestStep(nextStep);
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="Start" Id="{52f1f4d2-13d6-46fb-aa1f-c1affcffbade}" FolderPath="PLCOpenCaller\">
       <Declaration><![CDATA[METHOD Start : BOOL
 VAR_INPUT
-	Command	: IPLCOpenCommand;
+    Command : IPLCOpenCommand;
 END_VAR
 VAR
-	_commandIndex : INT;
+    _commandIndex : INT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF i_sequence.activeTasks.Start(Command) = 0 THEN
-	//TODO: All out of commands.. Throw an error
-	sequenceError( 10000, 'Too Many Commands in 1 step');
-	Start :=  FALSE;
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+IF i_sequence.activeTasks.Start(Command) = 0 THEN
+    // TODO: All out of commands.. Throw an error
+    sequenceError(10000, 'Too Many Commands in 1 step');
+    Start := FALSE;
 ELSE
-	Start :=  TRUE;	
+    Start := TRUE;
 END_IF
 ]]></ST>
       </Implementation>
@@ -445,7 +506,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[requestStep(startStep);]]></ST>
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+requestStep(startStep);]]></ST>
       </Implementation>
     </Method>
     <Property Name="status" Id="{68363903-1a6b-41ec-a7c2-c1a657dbfcb5}" FolderPath="PLCOpenCommand\">
@@ -457,7 +520,9 @@ PROPERTY status : PLCOpenStatusBase
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+]]></ST>
         </Implementation>
       </Get>
     </Property>
