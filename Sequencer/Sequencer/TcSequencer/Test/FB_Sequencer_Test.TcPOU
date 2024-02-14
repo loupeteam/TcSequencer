@@ -57,6 +57,7 @@ END_VAR
 TEST('SequenceOnAbort');
 	sequencer.RequestStep(1);
 	sequencer.SequenceAbort(0, 'Error message');
+	sequencer.Run();
 	outputVal := sequencer.OnAbort(1);
 	AssertTrue(Condition := outputVal, Message := 'Abort should be true');
 TEST_FINISHED();]]></ST>
@@ -100,11 +101,10 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('SequenceOnError');
-sequencer.RequestStep(1);
+	sequencer.RequestStep(1);
 	sequencer.SequenceError(0, 'Test Error');
 	sequencer.Run();
 	outputVal := sequencer.OnError(1);
-	
 	AssertTrue(Condition := outputVal, Message := 'Error should be true');
 TEST_FINISHED();]]></ST>
       </Implementation>
