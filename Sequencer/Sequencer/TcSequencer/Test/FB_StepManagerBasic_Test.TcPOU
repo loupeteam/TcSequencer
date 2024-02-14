@@ -28,7 +28,7 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('RequestStep');
-	stepManager._requestStep(2);
+	stepManager._RequestStep(2);
 	AssertEquals_UDINT(Expected := 2, Actual := stepManager.currentStep, 'Current Step shall be requested step');
 TEST_FINISHED();]]></ST>
       </Implementation>
@@ -45,7 +45,7 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('Reset');
-	stepManager._requestStep(20);
+	stepManager._RequestStep(20);
 	AssertEquals_UDINT(Expected := 20, Actual := stepManager.currentStep, 'Confirm current step is not default');
 	
 	stepManager._Reset();
