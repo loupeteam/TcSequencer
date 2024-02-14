@@ -19,7 +19,7 @@
     <Company>Loupe</Company>
     <Released>false</Released>
     <Title>TcSequencer</Title>
-    <ProjectVersion>0.0.2</ProjectVersion>
+    <ProjectVersion>0.0.3</ProjectVersion>
     <CombineIds>true</CombineIds>
     <LibraryCategories>
       <LibraryCategory xmlns="">
