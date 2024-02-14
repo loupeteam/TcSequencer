@@ -56,13 +56,13 @@ _currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
       <Declaration><![CDATA[PROPERTY CurrentStep : ENUM
 ]]></Declaration>
       <Get Name="Get" Id="{6ff7d4db-2de2-41e3-931f-d828caaa0f1f}">
-        <Declaration><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-VAR
+        <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[currentStep := _currentStep;]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+CurrentStep := _CurrentStep;]]></ST>
         </Implementation>
       </Get>
     </Property>

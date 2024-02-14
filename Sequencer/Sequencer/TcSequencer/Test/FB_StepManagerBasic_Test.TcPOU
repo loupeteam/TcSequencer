@@ -19,7 +19,7 @@ Reset();
     <Method Name="RequestStep" Id="{198c2120-5857-4c31-b6b8-c5eeca56d028}">
       <Declaration><![CDATA[METHOD RequestStep
 VAR
-    step_manager : StepManagerBasic();
+    stepManager : StepManagerBasic();
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -28,15 +28,15 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('RequestStep');
-	step_manager._requestStep(2);
-	AssertEquals_UDINT(Expected := 2, Actual := step_manager.currentStep, 'Current Step shall be requested step');
+	stepManager._requestStep(2);
+	AssertEquals_UDINT(Expected := 2, Actual := stepManager.currentStep, 'Current Step shall be requested step');
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Reset" Id="{f87175cc-f817-48db-aeb6-5cea267ae2ed}">
       <Declaration><![CDATA[METHOD Reset
 VAR
-    step_manager : StepManagerBasic();
+    stepManager : StepManagerBasic();
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -45,11 +45,11 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('Reset');
-	step_manager._requestStep(20);
-	AssertEquals_UDINT(Expected := 20, Actual := step_manager.currentStep, 'Confirm current step is not default');
+	stepManager._requestStep(20);
+	AssertEquals_UDINT(Expected := 20, Actual := stepManager.currentStep, 'Confirm current step is not default');
 	
-	step_manager._reset();
-	AssertEquals_UDINT(Expected := SEQUENCE_STEP.NO_STEP, Actual := step_manager.currentStep, 'Reset should have put current step back to default');
+	stepManager._Reset();
+	AssertEquals_UDINT(Expected := SEQUENCE_STEP.NO_STEP, Actual := stepManager.currentStep, 'Reset should have put current step back to default');
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>

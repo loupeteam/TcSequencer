@@ -33,11 +33,11 @@ TEST('CurrentAndRequestStep');
 	AssertEquals_UDINT(Expected := 0, Actual := sequencer.CurrentStep, Message := 'Current step shall default to 0');
 	
 	step := 2;
-	sequencer.requestStep(step);
+	sequencer.RequestStep(step);
 	AssertEquals_UDINT(Expected := step, Actual := sequencer.CurrentStep, Message := 'Current step expected to be updated');
 	
 	step := 3;
-	sequencer.requestStepClear(step);
+	sequencer.RequestStepClear(step);
 	AssertEquals_UDINT(Expected := step, Actual := sequencer.CurrentStep, Message := 'Current step expected to be updated');
 TEST_FINISHED();]]></ST>
       </Implementation>
@@ -55,9 +55,9 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('SequenceOnError');
-	sequencer.requestStep(1);
+	sequencer.RequestStep(1);
 	sequencer.SequenceAbort(-1, 'Error message');
-	outputVal := sequencer.onAbort(1);
+	outputVal := sequencer.OnAbort(1);
 	AssertTrue(Condition := outputVal, Message := 'This is not a real test');
 TEST_FINISHED();]]></ST>
       </Implementation>
@@ -78,10 +78,10 @@ END_VAR]]></Declaration>
 
 TEST('OnEntry');
 	
-	sequencer.startSequence();
-	sequencer.doStep();
+	sequencer.StartSequence();
+	sequencer.DoStep();
 	AssertTrue(Condition := sequencer.onEntry(), Message := 'onEntry should evaluate TRUE on first pass through a new step');
-	sequencer.doStep();
+	sequencer.DoStep();
 	AssertFalse(Condition := sequencer.onEntry(), Message := 'onEntry should evaluate FALSE on second pass');
 	
 TEST_FINISHED();]]></ST>
@@ -100,9 +100,9 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('SequenceOnError');
-	sequencer.sequenceError(0, 'Test Error');
+	sequencer.SequenceError(0, 'Test Error');
 	sequencer.Run();
-	outputVal := sequencer.onError(1);
+	outputVal := sequencer.OnError(1);
 	
 	AssertTrue(Condition := outputVal, Message := 'This is not a real test');
 TEST_FINISHED();]]></ST>
