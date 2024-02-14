@@ -87,7 +87,6 @@
     </PlaceholderReference>
     <PlaceholderReference Include="TcCommando">
       <DefaultResolution>TcCommando, * (Loupe)</DefaultResolution>
-      <Namespace>TcCommando</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcPluginFramework">
       <DefaultResolution>TcPluginFramework, * (Loupe)</DefaultResolution>

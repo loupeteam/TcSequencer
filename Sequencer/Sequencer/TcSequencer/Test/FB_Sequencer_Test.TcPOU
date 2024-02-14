@@ -56,9 +56,8 @@ END_VAR
 
 TEST('SequenceOnError');
 	sequencer.requestStep(1);
-	// setup abort
-	sequencer.i_sequence.isAbort := 1;
-	outputVal := sequencer.onError(1);
+	sequencer.SequenceAbort(-1, 'Error message');
+	outputVal := sequencer.onAbort(1);
 	AssertTrue(Condition := outputVal, Message := 'This is not a real test');
 TEST_FINISHED();]]></ST>
       </Implementation>
