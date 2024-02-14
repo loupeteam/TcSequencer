@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Sequencer" Id="{6cce11bf-bf75-4b96-8542-c7369e25211e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPLCOpenCall, IPlugin, IPLCOpenCommand
+    <Declaration><![CDATA[FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPLCopenCall, IPlugin, IPLCopenCommand
 VAR
     i_sequence : SequenceType;
     startStep : ENUM;
@@ -20,7 +20,7 @@ END_VAR
       <Folder Name="StateControl" Id="{6abf5737-70bc-45fb-a397-53c0f97ae526}" />
       <Folder Name="StateTransition" Id="{4654304c-709e-4a34-bdc7-0fda0c88f45a}" />
     </Folder>
-    <Folder Name="internal" Id="{e6aa5ed2-3892-4dae-8fd4-cfebc470258a}" />
+    <Folder Name="Internal" Id="{e6aa5ed2-3892-4dae-8fd4-cfebc470258a}" />
     <Folder Name="PLCOpenCaller" Id="{692cb7d4-90ad-40a3-84ed-e86faabe0e62}" />
     <Folder Name="PLCOpenCommand" Id="{fd5ca5cf-6943-410a-b526-e7c52c8742ad}" />
     <Method Name="Aborted" Id="{03503dc0-1791-43ea-b488-bf95491a91d2}" FolderPath="PLCOpenCaller\">
@@ -93,8 +93,8 @@ currentStep := i_sequence.stepHandler.currentStep;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="doStep" Id="{b100a4e3-ede6-467d-8a89-6654bcb8c169}" FolderPath="API\">
-      <Declaration><![CDATA[METHOD doStep : ENUM
+    <Method Name="DoStep" Id="{b100a4e3-ede6-467d-8a89-6654bcb8c169}" FolderPath="API\">
+      <Declaration><![CDATA[METHOD DoStep : ENUM
 VAR
 END_VAR
 ]]></Declaration>
@@ -228,8 +228,8 @@ isError := i_sequence.isError;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="onAbort" Id="{124a7554-7af0-48f3-9c3b-c6fcfb012c1a}" FolderPath="API\Decisions\">
-      <Declaration><![CDATA[METHOD onAbort : BOOL
+    <Method Name="OnAbort" Id="{124a7554-7af0-48f3-9c3b-c6fcfb012c1a}" FolderPath="API\Decisions\">
+      <Declaration><![CDATA[METHOD OnAbort : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -253,8 +253,8 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onEntry" Id="{d5293258-9127-40f2-8767-4af37daea8dd}" FolderPath="API\StateTransition\">
-      <Declaration><![CDATA[METHOD onEntry : BOOL
+    <Method Name="OnEntry" Id="{d5293258-9127-40f2-8767-4af37daea8dd}" FolderPath="API\StateTransition\">
+      <Declaration><![CDATA[METHOD OnEntry : BOOL
 VAR
     sequencer : Sequencer(0);
 END_VAR
@@ -266,8 +266,8 @@ END_VAR
 onEntry := i_sequence.onEntry;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onError" Id="{2b381ad0-9511-4a2a-a59b-89ff6fa0eadc}" FolderPath="API\Decisions\">
-      <Declaration><![CDATA[METHOD onError : BOOL
+    <Method Name="OnError" Id="{2b381ad0-9511-4a2a-a59b-89ff6fa0eadc}" FolderPath="API\Decisions\">
+      <Declaration><![CDATA[METHOD OnError : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -288,8 +288,8 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onExit" Id="{f59d2d40-7d9d-447e-9f98-0b5c912393f5}" FolderPath="API\StateTransition\">
-      <Declaration><![CDATA[METHOD onExit : BOOL
+    <Method Name="OnExit" Id="{f59d2d40-7d9d-447e-9f98-0b5c912393f5}" FolderPath="API\StateTransition\">
+      <Declaration><![CDATA[METHOD OnExit : BOOL
 VAR
     sequencer : Sequencer(0);
 END_VAR
@@ -302,8 +302,8 @@ onExit := i_sequence.onExit;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onFailure" Id="{8864cad6-d51a-434b-b76a-3fb1f56e20e0}" FolderPath="API\Decisions\">
-      <Declaration><![CDATA[METHOD onFailure : BOOL
+    <Method Name="OnFailure" Id="{8864cad6-d51a-434b-b76a-3fb1f56e20e0}" FolderPath="API\Decisions\">
+      <Declaration><![CDATA[METHOD OnFailure : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -324,8 +324,8 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onSuccess" Id="{2bf2939a-63ed-4f80-94f9-d2fc5becbe2f}" FolderPath="API\Decisions\">
-      <Declaration><![CDATA[METHOD onSuccess : BOOL
+    <Method Name="OnSuccess" Id="{2bf2939a-63ed-4f80-94f9-d2fc5becbe2f}" FolderPath="API\Decisions\">
+      <Declaration><![CDATA[METHOD OnSuccess : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -384,8 +384,8 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="requestStep" Id="{b48e0562-c987-4989-8061-de7cf0c6fe2a}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD requestStep : BOOL
+    <Method Name="RequestStep" Id="{b48e0562-c987-4989-8061-de7cf0c6fe2a}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD RequestStep : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -398,8 +398,8 @@ i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="requestStepClear" Id="{a486ef5e-3d7c-419f-8255-b0a39dabc8fc}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD requestStepClear : BOOL
+    <Method Name="RequestStepClear" Id="{a486ef5e-3d7c-419f-8255-b0a39dabc8fc}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD RequestStepClear : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -420,8 +420,8 @@ i_sequence.activeTasks.resetCommands();]]></ST>
 THIS^();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="sequenceAbort" Id="{cc629ce3-ace3-4ca4-872b-7b49e09a5e57}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD sequenceAbort : BOOL
+    <Method Name="SequenceAbort" Id="{cc629ce3-ace3-4ca4-872b-7b49e09a5e57}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD SequenceAbort : BOOL
 VAR_INPUT
     ErrorCode : DINT;
     ErrorMessage : STRING;
@@ -436,8 +436,8 @@ i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="sequenceComplete" Id="{f1ae842d-4867-4029-a65e-180592997a50}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD sequenceComplete : BOOL
+    <Method Name="SequenceComplete" Id="{f1ae842d-4867-4029-a65e-180592997a50}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD SequenceComplete : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -450,8 +450,8 @@ i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="sequenceError" Id="{06555983-6dc8-4375-b176-7e8590c26dcd}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD sequenceError : BOOL
+    <Method Name="SequenceError" Id="{06555983-6dc8-4375-b176-7e8590c26dcd}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD SequenceError : BOOL
 VAR_INPUT
     ErrorCode : DINT;
     ErrorMessage : STRING;
@@ -466,8 +466,8 @@ i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="setNextStep" Id="{c0c17481-86c4-4051-a78b-3b1ee372be58}" FolderPath="internal\">
-      <Declaration><![CDATA[METHOD PROTECTED setNextStep
+    <Method Name="SetNextStep" Id="{c0c17481-86c4-4051-a78b-3b1ee372be58}" FolderPath="Internal\">
+      <Declaration><![CDATA[METHOD PROTECTED SetNextStep
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -500,8 +500,8 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="startSequence" Id="{3c531c5d-3c1d-4272-888a-ef0a2888f2c8}">
-      <Declaration><![CDATA[METHOD startSequence : BOOL
+    <Method Name="StartSequence" Id="{3c531c5d-3c1d-4272-888a-ef0a2888f2c8}">
+      <Declaration><![CDATA[METHOD StartSequence : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
