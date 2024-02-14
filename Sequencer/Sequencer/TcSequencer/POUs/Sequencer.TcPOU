@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Sequencer" Id="{6cce11bf-bf75-4b96-8542-c7369e25211e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPLCOpenCall, IPlugin, IPLCOpenCommand
+    <Declaration><![CDATA[FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPLCopenCall, IPlugin, IPLCopenCommand
 VAR
     i_sequence : SequenceType;
     startStep : ENUM;
@@ -20,10 +20,10 @@ END_VAR
       <Folder Name="StateControl" Id="{6abf5737-70bc-45fb-a397-53c0f97ae526}" />
       <Folder Name="StateTransition" Id="{4654304c-709e-4a34-bdc7-0fda0c88f45a}" />
     </Folder>
-    <Folder Name="internal" Id="{e6aa5ed2-3892-4dae-8fd4-cfebc470258a}" />
-    <Folder Name="PLCOpenCaller" Id="{692cb7d4-90ad-40a3-84ed-e86faabe0e62}" />
-    <Folder Name="PLCOpenCommand" Id="{fd5ca5cf-6943-410a-b526-e7c52c8742ad}" />
-    <Method Name="Aborted" Id="{03503dc0-1791-43ea-b488-bf95491a91d2}" FolderPath="PLCOpenCaller\">
+    <Folder Name="Internal" Id="{e6aa5ed2-3892-4dae-8fd4-cfebc470258a}" />
+    <Folder Name="PLCopenCaller" Id="{692cb7d4-90ad-40a3-84ed-e86faabe0e62}" />
+    <Folder Name="PLCopenCommand" Id="{fd5ca5cf-6943-410a-b526-e7c52c8742ad}" />
+    <Method Name="Aborted" Id="{03503dc0-1791-43ea-b488-bf95491a91d2}" FolderPath="PLCopenCaller\">
       <Declaration><![CDATA[METHOD Aborted : BOOL
 ]]></Declaration>
       <Implementation>
@@ -32,11 +32,11 @@ END_VAR
 i_sequence.activeTasks.Aborted();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="AbortPreviousCommands" Id="{3e8b5447-d796-4ea8-80c7-2c28a2a20125}" FolderPath="PLCOpenCommand\">
+    <Method Name="AbortPreviousCommands" Id="{3e8b5447-d796-4ea8-80c7-2c28a2a20125}" FolderPath="PLCopenCommand\">
       <Declaration><![CDATA[{warning 'add method implementation '}
 METHOD AbortPreviousCommands : BOOL
 VAR_INPUT
-    newCommand : IPLCOpenCommand;
+    newCommand : IPLCopenCommand;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -45,8 +45,8 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="checkStatus" Id="{6b7c3f12-8739-4096-9480-9fa604b0d507}" FolderPath="PLCOpenCaller\">
-      <Declaration><![CDATA[METHOD PRIVATE checkStatus : BOOL
+    <Method Name="CheckStatus" Id="{6b7c3f12-8739-4096-9480-9fa604b0d507}" FolderPath="PLCopenCaller\">
+      <Declaration><![CDATA[METHOD PRIVATE CheckStatus : BOOL
 VAR
     _commandIndex : INT;
     _anyAbort : BOOL;
@@ -65,7 +65,7 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Consume" Id="{c686b2b3-bd51-492d-a98c-896ee2fdb4a5}" FolderPath="PLCOpenCommand\">
+    <Property Name="Consume" Id="{c686b2b3-bd51-492d-a98c-896ee2fdb4a5}" FolderPath="PLCopenCommand\">
       <Declaration><![CDATA[{warning 'add property implementation'}
 PROPERTY Consume : BOOL
 ]]></Declaration>
@@ -89,12 +89,12 @@ PROPERTY CurrentStep : ENUM]]></Declaration>
         <Implementation>
           <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-currentStep := i_sequence.stepHandler.currentStep;]]></ST>
+CurrentStep := i_sequence.stepHandler.currentStep;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="doStep" Id="{b100a4e3-ede6-467d-8a89-6654bcb8c169}" FolderPath="API\">
-      <Declaration><![CDATA[METHOD doStep : ENUM
+    <Method Name="DoStep" Id="{b100a4e3-ede6-467d-8a89-6654bcb8c169}" FolderPath="API\">
+      <Declaration><![CDATA[METHOD DoStep : ENUM
 VAR
 END_VAR
 ]]></Declaration>
@@ -135,7 +135,7 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Errored" Id="{d625b5cc-7ecf-4617-9302-d9a3a7aca5f7}" FolderPath="PLCOpenCaller\">
+    <Method Name="Errored" Id="{d625b5cc-7ecf-4617-9302-d9a3a7aca5f7}" FolderPath="PLCopenCaller\">
       <Declaration><![CDATA[METHOD Errored : BOOL
 VAR_INPUT
     ID : INT;
@@ -147,7 +147,7 @@ END_VAR
 i_sequence.activeTasks.Errored(ID);]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Execute" Id="{70b56461-1624-4c81-b1ce-428ab1a7951c}" FolderPath="PLCOpenCommand\">
+    <Property Name="Execute" Id="{70b56461-1624-4c81-b1ce-428ab1a7951c}" FolderPath="PLCopenCommand\">
       <Declaration><![CDATA[{warning 'add property implementation'}
 PROPERTY Execute : BOOL
 ]]></Declaration>
@@ -180,7 +180,7 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Finished" Id="{263545ca-8111-417f-aa03-89bc837548e2}" FolderPath="PLCOpenCaller\">
+    <Method Name="Finished" Id="{263545ca-8111-417f-aa03-89bc837548e2}" FolderPath="PLCopenCaller\">
       <Declaration><![CDATA[METHOD Finished : BOOL
 ]]></Declaration>
       <Implementation>
@@ -190,46 +190,47 @@ i_sequence.activeTasks.Finished();
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="isAbort" Id="{dbaf10d5-3866-4d96-b10f-98bd3ccf9a22}" FolderPath="PLCOpenCaller\">
-      <Declaration><![CDATA[PROPERTY isAbort : BOOL]]></Declaration>
+    <Property Name="IsAbort" Id="{dbaf10d5-3866-4d96-b10f-98bd3ccf9a22}" FolderPath="PLCopenCaller\">
+      <Declaration><![CDATA[PROPERTY IsAbort : BOOL]]></Declaration>
       <Get Name="Get" Id="{06516dd3-b590-4e87-bf5f-fded754e45e8}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
           <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-checkStatus();
-isAbort := i_sequence.isAbort;]]></ST>
+CheckStatus();
+IsAbort := i_sequence.IsAbort;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="isDone" Id="{0abb87b3-c33c-4d5b-bab6-668ee8ff9e26}" FolderPath="PLCOpenCaller\">
-      <Declaration><![CDATA[PROPERTY isDone : BOOL]]></Declaration>
+    <Property Name="IsDone" Id="{0abb87b3-c33c-4d5b-bab6-668ee8ff9e26}" FolderPath="PLCopenCaller\">
+      <Declaration><![CDATA[PROPERTY IsDone : BOOL]]></Declaration>
       <Get Name="Get" Id="{0c5d4645-ee28-4cc6-87d7-b772cfb09f31}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
           <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-checkStatus();
-isDone := i_sequence.isDone;]]></ST>
+CheckStatus();
+IsDone := i_sequence.IsDone;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="isError" Id="{45d11189-3838-46ca-97d2-70f9988c183a}" FolderPath="PLCOpenCaller\">
-      <Declaration><![CDATA[PROPERTY isError : BOOL]]></Declaration>
+    <Property Name="IsError" Id="{45d11189-3838-46ca-97d2-70f9988c183a}" FolderPath="PLCopenCaller\">
+      <Declaration><![CDATA[PROPERTY IsError : BOOL]]></Declaration>
       <Get Name="Get" Id="{8849948e-45c2-441d-abda-6c306a83e77e}">
-        <Declaration><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
+        <Declaration><![CDATA[
 VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[checkStatus();
-isError := i_sequence.isError;]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+CheckStatus();
+IsError := i_sequence.IsError;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="onAbort" Id="{124a7554-7af0-48f3-9c3b-c6fcfb012c1a}" FolderPath="API\Decisions\">
-      <Declaration><![CDATA[METHOD onAbort : BOOL
+    <Method Name="OnAbort" Id="{124a7554-7af0-48f3-9c3b-c6fcfb012c1a}" FolderPath="API\Decisions\">
+      <Declaration><![CDATA[METHOD OnAbort : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -253,8 +254,8 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onEntry" Id="{d5293258-9127-40f2-8767-4af37daea8dd}" FolderPath="API\StateTransition\">
-      <Declaration><![CDATA[METHOD onEntry : BOOL
+    <Method Name="OnEntry" Id="{d5293258-9127-40f2-8767-4af37daea8dd}" FolderPath="API\StateTransition\">
+      <Declaration><![CDATA[METHOD OnEntry : BOOL
 VAR
     sequencer : Sequencer(0);
 END_VAR
@@ -266,8 +267,8 @@ END_VAR
 onEntry := i_sequence.onEntry;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onError" Id="{2b381ad0-9511-4a2a-a59b-89ff6fa0eadc}" FolderPath="API\Decisions\">
-      <Declaration><![CDATA[METHOD onError : BOOL
+    <Method Name="OnError" Id="{2b381ad0-9511-4a2a-a59b-89ff6fa0eadc}" FolderPath="API\Decisions\">
+      <Declaration><![CDATA[METHOD OnError : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -275,21 +276,21 @@ END_VAR
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-IF isError THEN
+IF IsError THEN
     IF nextStep >= 0 THEN
         LogMessage(1, 'Step Abort');
         i_sequence.errorHandled := TRUE;
         setNextStep(nextStep);
     END_IF
 
-    onError := TRUE;
+    OnError := TRUE;
 ELSE
-    onError := FALSE;
+    OnError := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onExit" Id="{f59d2d40-7d9d-447e-9f98-0b5c912393f5}" FolderPath="API\StateTransition\">
-      <Declaration><![CDATA[METHOD onExit : BOOL
+    <Method Name="OnExit" Id="{f59d2d40-7d9d-447e-9f98-0b5c912393f5}" FolderPath="API\StateTransition\">
+      <Declaration><![CDATA[METHOD OnExit : BOOL
 VAR
     sequencer : Sequencer(0);
 END_VAR
@@ -302,8 +303,8 @@ onExit := i_sequence.onExit;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onFailure" Id="{8864cad6-d51a-434b-b76a-3fb1f56e20e0}" FolderPath="API\Decisions\">
-      <Declaration><![CDATA[METHOD onFailure : BOOL
+    <Method Name="OnFailure" Id="{8864cad6-d51a-434b-b76a-3fb1f56e20e0}" FolderPath="API\Decisions\">
+      <Declaration><![CDATA[METHOD OnFailure : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -324,8 +325,8 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="onSuccess" Id="{2bf2939a-63ed-4f80-94f9-d2fc5becbe2f}" FolderPath="API\Decisions\">
-      <Declaration><![CDATA[METHOD onSuccess : BOOL
+    <Method Name="OnSuccess" Id="{2bf2939a-63ed-4f80-94f9-d2fc5becbe2f}" FolderPath="API\Decisions\">
+      <Declaration><![CDATA[METHOD OnSuccess : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -346,11 +347,11 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="registerGroup" Id="{5f406888-2a46-47ae-9726-a29fd96682c8}" FolderPath="PLCOpenCommand\">
+    <Method Name="RegisterGroup" Id="{5f406888-2a46-47ae-9726-a29fd96682c8}" FolderPath="PLCopenCommand\">
       <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD registerGroup : BOOL
+METHOD RegisterGroup : BOOL
 VAR_INPUT
-    group : IPLCOpenGroup;
+    group : IPLCopenGroup;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -359,9 +360,9 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Remote" Id="{1baaa5db-8663-490c-a646-fa9e05570894}" FolderPath="PLCOpenCommand\">
+    <Property Name="Remote" Id="{1baaa5db-8663-490c-a646-fa9e05570894}" FolderPath="PLCopenCommand\">
       <Declaration><![CDATA[{warning 'add property implementation'}
-PROPERTY Remote : IPLCOpenCall
+PROPERTY Remote : IPLCopenCall
 ]]></Declaration>
       <Get Name="Get" Id="{fcb1f48e-bcf9-4ced-abb1-06b16eacc58a}">
         <Declaration><![CDATA[VAR
@@ -384,8 +385,8 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="requestStep" Id="{b48e0562-c987-4989-8061-de7cf0c6fe2a}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD requestStep : BOOL
+    <Method Name="RequestStep" Id="{b48e0562-c987-4989-8061-de7cf0c6fe2a}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD RequestStep : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -398,8 +399,8 @@ i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="requestStepClear" Id="{a486ef5e-3d7c-419f-8255-b0a39dabc8fc}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD requestStepClear : BOOL
+    <Method Name="RequestStepClear" Id="{a486ef5e-3d7c-419f-8255-b0a39dabc8fc}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD RequestStepClear : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -420,8 +421,8 @@ i_sequence.activeTasks.resetCommands();]]></ST>
 THIS^();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="sequenceAbort" Id="{cc629ce3-ace3-4ca4-872b-7b49e09a5e57}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD sequenceAbort : BOOL
+    <Method Name="SequenceAbort" Id="{cc629ce3-ace3-4ca4-872b-7b49e09a5e57}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD SequenceAbort : BOOL
 VAR_INPUT
     ErrorCode : DINT;
     ErrorMessage : STRING;
@@ -436,8 +437,8 @@ i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="sequenceComplete" Id="{f1ae842d-4867-4029-a65e-180592997a50}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD sequenceComplete : BOOL
+    <Method Name="SequenceComplete" Id="{f1ae842d-4867-4029-a65e-180592997a50}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD SequenceComplete : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -450,8 +451,8 @@ i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="sequenceError" Id="{06555983-6dc8-4375-b176-7e8590c26dcd}" FolderPath="API\StateControl\">
-      <Declaration><![CDATA[METHOD sequenceError : BOOL
+    <Method Name="SequenceError" Id="{06555983-6dc8-4375-b176-7e8590c26dcd}" FolderPath="API\StateControl\">
+      <Declaration><![CDATA[METHOD SequenceError : BOOL
 VAR_INPUT
     ErrorCode : DINT;
     ErrorMessage : STRING;
@@ -466,8 +467,8 @@ i_sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="setNextStep" Id="{c0c17481-86c4-4051-a78b-3b1ee372be58}" FolderPath="internal\">
-      <Declaration><![CDATA[METHOD PROTECTED setNextStep
+    <Method Name="SetNextStep" Id="{c0c17481-86c4-4051-a78b-3b1ee372be58}" FolderPath="Internal\">
+      <Declaration><![CDATA[METHOD PROTECTED SetNextStep
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
@@ -479,10 +480,10 @@ i_sequence.stepHandler._requestStep(nextStep);
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Start" Id="{52f1f4d2-13d6-46fb-aa1f-c1affcffbade}" FolderPath="PLCOpenCaller\">
+    <Method Name="Start" Id="{52f1f4d2-13d6-46fb-aa1f-c1affcffbade}" FolderPath="PLCopenCaller\">
       <Declaration><![CDATA[METHOD Start : BOOL
 VAR_INPUT
-    Command : IPLCOpenCommand;
+    Command : IPLCopenCommand;
 END_VAR
 VAR
     _commandIndex : INT;
@@ -500,8 +501,8 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="startSequence" Id="{3c531c5d-3c1d-4272-888a-ef0a2888f2c8}">
-      <Declaration><![CDATA[METHOD startSequence : BOOL
+    <Method Name="StartSequence" Id="{3c531c5d-3c1d-4272-888a-ef0a2888f2c8}">
+      <Declaration><![CDATA[METHOD StartSequence : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -511,9 +512,9 @@ END_VAR
 requestStep(startStep);]]></ST>
       </Implementation>
     </Method>
-    <Property Name="status" Id="{68363903-1a6b-41ec-a7c2-c1a657dbfcb5}" FolderPath="PLCOpenCommand\">
+    <Property Name="Status" Id="{68363903-1a6b-41ec-a7c2-c1a657dbfcb5}" FolderPath="PLCopenCommand\">
       <Declaration><![CDATA[{warning 'add property implementation'}
-PROPERTY status : PLCOpenStatusBase
+PROPERTY Status : PLCopenStatusBase
 ]]></Declaration>
       <Get Name="Get" Id="{a24d3272-022a-44f7-9db8-9409d2cc0db6}">
         <Declaration><![CDATA[VAR

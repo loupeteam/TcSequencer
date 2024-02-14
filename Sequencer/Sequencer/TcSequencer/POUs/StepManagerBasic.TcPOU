@@ -11,8 +11,8 @@ END_VAR]]></Declaration>
       <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 ]]></ST>
     </Implementation>
-    <Method Name="_requestStep" Id="{631d6933-a3d4-4a04-8d8b-2defab756516}">
-      <Declaration><![CDATA[METHOD _requestStep : BOOL
+    <Method Name="_RequestStep" Id="{631d6933-a3d4-4a04-8d8b-2defab756516}">
+      <Declaration><![CDATA[METHOD _RequestStep : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR]]></Declaration>
@@ -23,8 +23,8 @@ _requestNumber := _requestNumber + 1;
 _currentStep := nextStep;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="_reset" Id="{fb88c2f8-268f-48f3-8ad4-521cc35aeb3a}">
-      <Declaration><![CDATA[METHOD _reset : BOOL
+    <Method Name="_Reset" Id="{fb88c2f8-268f-48f3-8ad4-521cc35aeb3a}">
+      <Declaration><![CDATA[METHOD _Reset : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
@@ -32,18 +32,8 @@ _currentStep := nextStep;]]></ST>
 _currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="_sequenceComplete" Id="{ff6a8092-1516-4df4-b57d-1bb9d4d5c97b}">
-      <Declaration><![CDATA[METHOD _sequenceComplete : BOOL
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-_requestNumber := _requestNumber + 1;
-_currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="_sequenceError" Id="{a9f4d538-abc7-4246-9047-1ad6d24ed996}">
-      <Declaration><![CDATA[METHOD _sequenceError : BOOL
+    <Method Name="_SequenceComplete" Id="{ff6a8092-1516-4df4-b57d-1bb9d4d5c97b}">
+      <Declaration><![CDATA[METHOD _SequenceComplete : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
@@ -52,17 +42,27 @@ _requestNumber := _requestNumber + 1;
 _currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="currentStep" Id="{29f4d86c-54a1-42a1-8dae-2fa8be71c206}">
-      <Declaration><![CDATA[PROPERTY currentStep : ENUM
+    <Method Name="_SequenceError" Id="{a9f4d538-abc7-4246-9047-1ad6d24ed996}">
+      <Declaration><![CDATA[METHOD _SequenceError : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+_requestNumber := _requestNumber + 1;
+_currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="CurrentStep" Id="{29f4d86c-54a1-42a1-8dae-2fa8be71c206}">
+      <Declaration><![CDATA[PROPERTY CurrentStep : ENUM
 ]]></Declaration>
       <Get Name="Get" Id="{6ff7d4db-2de2-41e3-931f-d828caaa0f1f}">
-        <Declaration><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-VAR
+        <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[currentStep := _currentStep;]]></ST>
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+
+CurrentStep := _CurrentStep;]]></ST>
         </Implementation>
       </Get>
     </Property>

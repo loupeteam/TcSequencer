@@ -19,7 +19,7 @@
     <Company>Loupe</Company>
     <Released>false</Released>
     <Title>TcSequencer</Title>
-    <ProjectVersion>0.0.2</ProjectVersion>
+    <ProjectVersion>0.0.3</ProjectVersion>
     <CombineIds>true</CombineIds>
     <LibraryCategories>
       <LibraryCategory xmlns="">
@@ -69,7 +69,6 @@
     <Folder Include="GVLs" />
     <Folder Include="Interfaces" />
     <Folder Include="Test" />
-    <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
@@ -87,7 +86,6 @@
     </PlaceholderReference>
     <PlaceholderReference Include="TcCommando">
       <DefaultResolution>TcCommando, * (Loupe)</DefaultResolution>
-      <Namespace>TcCommando</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="TcPluginFramework">
       <DefaultResolution>TcPluginFramework, * (Loupe)</DefaultResolution>

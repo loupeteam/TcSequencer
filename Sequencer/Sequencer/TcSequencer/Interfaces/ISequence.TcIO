@@ -3,7 +3,7 @@
   <Itf Name="ISequence" Id="{ec403192-db1e-410a-9f94-aa5afd69329b}">
     <Declaration><![CDATA[INTERFACE ISequence
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.]]></Declaration>
-    <Folder Name="callbacks" Id="{3d1e23ba-0316-470f-8744-3aa607d72bad}" />
+    <Folder Name="Callbacks" Id="{3d1e23ba-0316-470f-8744-3aa607d72bad}" />
     <Folder Name="StateControl" Id="{daaf35c2-6411-4d82-aef2-a15497701697}" />
     <Property Name="CurrentStep" Id="{d83302e6-d8e8-46af-86eb-9a1fd884af7b}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
@@ -12,90 +12,90 @@ PROPERTY CurrentStep : ENUM]]></Declaration>
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Method Name="doStep" Id="{9a34277b-a3ad-4319-a578-90c522c3c623}">
-      <Declaration><![CDATA[METHOD doStep : ENUM
+    <Method Name="DoStep" Id="{9a34277b-a3ad-4319-a578-90c522c3c623}">
+      <Declaration><![CDATA[METHOD DoStep : ENUM
 VAR
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="onAbort" Id="{4445ff1a-fbfc-4467-ae59-52d6282d62cc}" FolderPath="callbacks\">
-      <Declaration><![CDATA[METHOD onAbort : BOOL
+    <Method Name="OnAbort" Id="{4445ff1a-fbfc-4467-ae59-52d6282d62cc}" FolderPath="Callbacks\">
+      <Declaration><![CDATA[METHOD OnAbort : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="onEntry" Id="{151235a9-806e-47c6-9584-1ba6690c0af0}" FolderPath="callbacks\">
-      <Declaration><![CDATA[METHOD onEntry : BOOL
+    <Method Name="OnEntry" Id="{151235a9-806e-47c6-9584-1ba6690c0af0}" FolderPath="Callbacks\">
+      <Declaration><![CDATA[METHOD OnEntry : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="onError" Id="{bcf3cc66-e294-4626-a88a-229a42065635}" FolderPath="callbacks\">
-      <Declaration><![CDATA[METHOD onError : BOOL
-VAR_INPUT
-    nextStep : ENUM;
-END_VAR
-]]></Declaration>
-    </Method>
-    <Method Name="onExit" Id="{7a1ed197-67b1-4a9f-b7b9-e80cf5833314}" FolderPath="callbacks\">
-      <Declaration><![CDATA[METHOD onExit : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-    </Method>
-    <Method Name="onFailure" Id="{0fd686e6-f999-4918-9b3d-8a51abb3cd5a}" FolderPath="callbacks\">
-      <Declaration><![CDATA[METHOD onFailure : BOOL
+    <Method Name="OnError" Id="{bcf3cc66-e294-4626-a88a-229a42065635}" FolderPath="Callbacks\">
+      <Declaration><![CDATA[METHOD OnError : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="onSuccess" Id="{82c8d03a-450e-4fab-9845-0d89e2f94a52}" FolderPath="callbacks\">
-      <Declaration><![CDATA[METHOD onSuccess : BOOL
+    <Method Name="OnExit" Id="{7a1ed197-67b1-4a9f-b7b9-e80cf5833314}" FolderPath="Callbacks\">
+      <Declaration><![CDATA[METHOD OnExit : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="OnFailure" Id="{0fd686e6-f999-4918-9b3d-8a51abb3cd5a}" FolderPath="Callbacks\">
+      <Declaration><![CDATA[METHOD OnFailure : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="requestStep" Id="{eda50567-af34-458e-89ce-ac3a3abf3610}" FolderPath="StateControl\">
-      <Declaration><![CDATA[METHOD requestStep : BOOL
+    <Method Name="OnSuccess" Id="{82c8d03a-450e-4fab-9845-0d89e2f94a52}" FolderPath="Callbacks\">
+      <Declaration><![CDATA[METHOD OnSuccess : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="requestStepClear" Id="{e59012ec-24ed-47da-8aaf-87ba4a553cbc}" FolderPath="StateControl\">
-      <Declaration><![CDATA[METHOD requestStepClear : BOOL
+    <Method Name="RequestStep" Id="{eda50567-af34-458e-89ce-ac3a3abf3610}" FolderPath="StateControl\">
+      <Declaration><![CDATA[METHOD RequestStep : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="sequenceAbort" Id="{53bba82b-ae56-4f65-8efe-cc2958f21910}" FolderPath="StateControl\">
-      <Declaration><![CDATA[METHOD sequenceAbort : BOOL
+    <Method Name="RequestStepClear" Id="{e59012ec-24ed-47da-8aaf-87ba4a553cbc}" FolderPath="StateControl\">
+      <Declaration><![CDATA[METHOD RequestStepClear : BOOL
+VAR_INPUT
+    nextStep : ENUM;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SequenceAbort" Id="{53bba82b-ae56-4f65-8efe-cc2958f21910}" FolderPath="StateControl\">
+      <Declaration><![CDATA[METHOD SequenceAbort : BOOL
 VAR_INPUT
     ErrorCode : DINT;
     ErrorMessage : STRING;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="sequenceComplete" Id="{f99ee7a2-4375-4d65-878a-d803b3f40315}" FolderPath="StateControl\">
-      <Declaration><![CDATA[METHOD sequenceComplete : BOOL
+    <Method Name="SequenceComplete" Id="{f99ee7a2-4375-4d65-878a-d803b3f40315}" FolderPath="StateControl\">
+      <Declaration><![CDATA[METHOD SequenceComplete : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="sequenceError" Id="{efd40ff7-83f9-47af-a16c-c4732fe53c27}" FolderPath="StateControl\">
-      <Declaration><![CDATA[METHOD sequenceError : BOOL
+    <Method Name="SequenceError" Id="{efd40ff7-83f9-47af-a16c-c4732fe53c27}" FolderPath="StateControl\">
+      <Declaration><![CDATA[METHOD SequenceError : BOOL
 VAR_INPUT
     ErrorCode : DINT;
     ErrorMessage : STRING;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="startSequence" Id="{1cd7451d-fc48-48da-b2a6-3f2d996e06ee}">
-      <Declaration><![CDATA[METHOD startSequence : BOOL
+    <Method Name="StartSequence" Id="{1cd7451d-fc48-48da-b2a6-3f2d996e06ee}">
+      <Declaration><![CDATA[METHOD StartSequence : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>

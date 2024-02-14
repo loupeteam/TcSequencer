@@ -3,33 +3,33 @@
   <Itf Name="IStepManager" Id="{89c191eb-450f-4144-a19d-873d9f6fc237}">
     <Declaration><![CDATA[INTERFACE IStepManager
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.]]></Declaration>
-    <Method Name="_requestStep" Id="{484e6cd7-60ba-4268-b695-64585da66145}">
-      <Declaration><![CDATA[METHOD _requestStep : BOOL
+    <Method Name="_RequestStep" Id="{484e6cd7-60ba-4268-b695-64585da66145}">
+      <Declaration><![CDATA[METHOD _RequestStep : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="_reset" Id="{c44b696d-696b-4673-a947-9ec390e7c67e}">
-      <Declaration><![CDATA[METHOD _reset : BOOL
+    <Method Name="_Reset" Id="{c44b696d-696b-4673-a947-9ec390e7c67e}">
+      <Declaration><![CDATA[METHOD _Reset : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="_sequenceComplete" Id="{f41bcaea-5de9-45b2-807e-ba3bb516ac9c}">
-      <Declaration><![CDATA[METHOD _sequenceComplete : BOOL
+    <Method Name="_SequenceComplete" Id="{f41bcaea-5de9-45b2-807e-ba3bb516ac9c}">
+      <Declaration><![CDATA[METHOD _SequenceComplete : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="_sequenceError" Id="{346d84e2-d277-4231-a765-0b63457bf8e8}">
-      <Declaration><![CDATA[METHOD _sequenceError : BOOL
+    <Method Name="_SequenceError" Id="{346d84e2-d277-4231-a765-0b63457bf8e8}">
+      <Declaration><![CDATA[METHOD _SequenceError : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="currentStep" Id="{f549aba3-dc6c-45db-ae21-2b43a54633f2}">
-      <Declaration><![CDATA[PROPERTY currentStep : ENUM]]></Declaration>
+    <Property Name="CurrentStep" Id="{f549aba3-dc6c-45db-ae21-2b43a54633f2}">
+      <Declaration><![CDATA[PROPERTY CurrentStep : ENUM]]></Declaration>
       <Get Name="Get" Id="{e53bfbc9-86ad-48ac-b648-09cfbdc36fb7}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
