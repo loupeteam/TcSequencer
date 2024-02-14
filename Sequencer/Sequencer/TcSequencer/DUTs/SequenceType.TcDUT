@@ -17,7 +17,7 @@
         isError : BOOL;
 
         stepHandler : IStepManager;
-        activeTasks : PLCOpenCallGroup;
+        activeTasks : PLCopenCallGroup;
 
         errorHandled : BOOL;
 

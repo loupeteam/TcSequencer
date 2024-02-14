@@ -20,7 +20,7 @@ CurrentAndRequestStep();]]></ST>
       <Declaration><![CDATA[METHOD CurrentAndRequestStep
 VAR
     sequencer : Sequencer(0);
-    Command : PLCOpenCommand();
+    Command : PLCopenCommand();
     step : UDINT;
 END_VAR
 ]]></Declaration>

@@ -36,7 +36,7 @@ i_sequence.activeTasks.Aborted();]]></ST>
       <Declaration><![CDATA[{warning 'add method implementation '}
 METHOD AbortPreviousCommands : BOOL
 VAR_INPUT
-    newCommand : IPLCOpenCommand;
+    newCommand : IPLCopenCommand;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -190,8 +190,8 @@ i_sequence.activeTasks.Finished();
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="isAbort" Id="{dbaf10d5-3866-4d96-b10f-98bd3ccf9a22}" FolderPath="PLCOpenCaller\">
-      <Declaration><![CDATA[PROPERTY isAbort : BOOL]]></Declaration>
+    <Property Name="IsAbort" Id="{dbaf10d5-3866-4d96-b10f-98bd3ccf9a22}" FolderPath="PLCOpenCaller\">
+      <Declaration><![CDATA[PROPERTY IsAbort : BOOL]]></Declaration>
       <Get Name="Get" Id="{06516dd3-b590-4e87-bf5f-fded754e45e8}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
@@ -202,8 +202,8 @@ isAbort := i_sequence.isAbort;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="isDone" Id="{0abb87b3-c33c-4d5b-bab6-668ee8ff9e26}" FolderPath="PLCOpenCaller\">
-      <Declaration><![CDATA[PROPERTY isDone : BOOL]]></Declaration>
+    <Property Name="IsDone" Id="{0abb87b3-c33c-4d5b-bab6-668ee8ff9e26}" FolderPath="PLCOpenCaller\">
+      <Declaration><![CDATA[PROPERTY IsDone : BOOL]]></Declaration>
       <Get Name="Get" Id="{0c5d4645-ee28-4cc6-87d7-b772cfb09f31}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
@@ -214,8 +214,8 @@ isDone := i_sequence.isDone;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="isError" Id="{45d11189-3838-46ca-97d2-70f9988c183a}" FolderPath="PLCOpenCaller\">
-      <Declaration><![CDATA[PROPERTY isError : BOOL]]></Declaration>
+    <Property Name="IsError" Id="{45d11189-3838-46ca-97d2-70f9988c183a}" FolderPath="PLCOpenCaller\">
+      <Declaration><![CDATA[PROPERTY IsError : BOOL]]></Declaration>
       <Get Name="Get" Id="{8849948e-45c2-441d-abda-6c306a83e77e}">
         <Declaration><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
@@ -346,11 +346,11 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="registerGroup" Id="{5f406888-2a46-47ae-9726-a29fd96682c8}" FolderPath="PLCOpenCommand\">
+    <Method Name="RegisterGroup" Id="{5f406888-2a46-47ae-9726-a29fd96682c8}" FolderPath="PLCOpenCommand\">
       <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD registerGroup : BOOL
+METHOD RegisterGroup : BOOL
 VAR_INPUT
-    group : IPLCOpenGroup;
+    group : IPLCopenGroup;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -361,7 +361,7 @@ END_VAR
     </Method>
     <Property Name="Remote" Id="{1baaa5db-8663-490c-a646-fa9e05570894}" FolderPath="PLCOpenCommand\">
       <Declaration><![CDATA[{warning 'add property implementation'}
-PROPERTY Remote : IPLCOpenCall
+PROPERTY Remote : IPLCopenCall
 ]]></Declaration>
       <Get Name="Get" Id="{fcb1f48e-bcf9-4ced-abb1-06b16eacc58a}">
         <Declaration><![CDATA[VAR
@@ -482,7 +482,7 @@ i_sequence.stepHandler._requestStep(nextStep);
     <Method Name="Start" Id="{52f1f4d2-13d6-46fb-aa1f-c1affcffbade}" FolderPath="PLCOpenCaller\">
       <Declaration><![CDATA[METHOD Start : BOOL
 VAR_INPUT
-    Command : IPLCOpenCommand;
+    Command : IPLCopenCommand;
 END_VAR
 VAR
     _commandIndex : INT;
@@ -511,9 +511,9 @@ END_VAR
 requestStep(startStep);]]></ST>
       </Implementation>
     </Method>
-    <Property Name="status" Id="{68363903-1a6b-41ec-a7c2-c1a657dbfcb5}" FolderPath="PLCOpenCommand\">
+    <Property Name="Status" Id="{68363903-1a6b-41ec-a7c2-c1a657dbfcb5}" FolderPath="PLCOpenCommand\">
       <Declaration><![CDATA[{warning 'add property implementation'}
-PROPERTY status : PLCOpenStatusBase
+PROPERTY Status : PLCopenStatusBase
 ]]></Declaration>
       <Get Name="Get" Id="{a24d3272-022a-44f7-9db8-9409d2cc0db6}">
         <Declaration><![CDATA[VAR

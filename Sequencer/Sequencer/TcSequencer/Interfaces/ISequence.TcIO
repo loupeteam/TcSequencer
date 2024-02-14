@@ -3,7 +3,7 @@
   <Itf Name="ISequence" Id="{ec403192-db1e-410a-9f94-aa5afd69329b}">
     <Declaration><![CDATA[INTERFACE ISequence
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.]]></Declaration>
-    <Folder Name="callbacks" Id="{3d1e23ba-0316-470f-8744-3aa607d72bad}" />
+    <Folder Name="Callbacks" Id="{3d1e23ba-0316-470f-8744-3aa607d72bad}" />
     <Folder Name="StateControl" Id="{daaf35c2-6411-4d82-aef2-a15497701697}" />
     <Property Name="CurrentStep" Id="{d83302e6-d8e8-46af-86eb-9a1fd884af7b}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
@@ -18,40 +18,40 @@ VAR
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="OnAbort" Id="{4445ff1a-fbfc-4467-ae59-52d6282d62cc}" FolderPath="callbacks\">
+    <Method Name="OnAbort" Id="{4445ff1a-fbfc-4467-ae59-52d6282d62cc}" FolderPath="Callbacks\">
       <Declaration><![CDATA[METHOD OnAbort : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="OnEntry" Id="{151235a9-806e-47c6-9584-1ba6690c0af0}" FolderPath="callbacks\">
+    <Method Name="OnEntry" Id="{151235a9-806e-47c6-9584-1ba6690c0af0}" FolderPath="Callbacks\">
       <Declaration><![CDATA[METHOD OnEntry : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="OnError" Id="{bcf3cc66-e294-4626-a88a-229a42065635}" FolderPath="callbacks\">
+    <Method Name="OnError" Id="{bcf3cc66-e294-4626-a88a-229a42065635}" FolderPath="Callbacks\">
       <Declaration><![CDATA[METHOD OnError : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="OnExit" Id="{7a1ed197-67b1-4a9f-b7b9-e80cf5833314}" FolderPath="callbacks\">
+    <Method Name="OnExit" Id="{7a1ed197-67b1-4a9f-b7b9-e80cf5833314}" FolderPath="Callbacks\">
       <Declaration><![CDATA[METHOD OnExit : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="OnFailure" Id="{0fd686e6-f999-4918-9b3d-8a51abb3cd5a}" FolderPath="callbacks\">
+    <Method Name="OnFailure" Id="{0fd686e6-f999-4918-9b3d-8a51abb3cd5a}" FolderPath="Callbacks\">
       <Declaration><![CDATA[METHOD OnFailure : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="OnSuccess" Id="{82c8d03a-450e-4fab-9845-0d89e2f94a52}" FolderPath="callbacks\">
+    <Method Name="OnSuccess" Id="{82c8d03a-450e-4fab-9845-0d89e2f94a52}" FolderPath="Callbacks\">
       <Declaration><![CDATA[METHOD OnSuccess : BOOL
 VAR_INPUT
     nextStep : ENUM;
