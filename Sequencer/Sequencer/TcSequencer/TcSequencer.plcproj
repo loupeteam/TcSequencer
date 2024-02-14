@@ -69,7 +69,6 @@
     <Folder Include="GVLs" />
     <Folder Include="Interfaces" />
     <Folder Include="Test" />
-    <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
