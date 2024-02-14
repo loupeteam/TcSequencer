@@ -89,7 +89,7 @@ PROPERTY CurrentStep : ENUM]]></Declaration>
         <Implementation>
           <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-currentStep := i_sequence.stepHandler.currentStep;]]></ST>
+CurrentStep := i_sequence.stepHandler.currentStep;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -218,7 +218,6 @@ IsDone := i_sequence.IsDone;]]></ST>
       <Declaration><![CDATA[PROPERTY IsError : BOOL]]></Declaration>
       <Get Name="Get" Id="{8849948e-45c2-441d-abda-6c306a83e77e}">
         <Declaration><![CDATA[
-
 VAR
 END_VAR
 ]]></Declaration>
@@ -277,16 +276,16 @@ END_VAR
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-IF isError THEN
+IF IsError THEN
     IF nextStep >= 0 THEN
         LogMessage(1, 'Step Abort');
         i_sequence.errorHandled := TRUE;
         setNextStep(nextStep);
     END_IF
 
-    onError := TRUE;
+    OnError := TRUE;
 ELSE
-    onError := FALSE;
+    OnError := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
