@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="PRGTEST" Id="{cb0dada2-790f-48b3-8702-fc17bd7e66f5}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM PRGTEST
+  <POU Name="TESTPRG" Id="{cb0dada2-790f-48b3-8702-fc17bd7e66f5}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TESTPRG
 VAR
-    sequencer_test : FB_Sequencer_Test;
-    step_manager_test : FB_StepManagerBasic_Test;
+    sequencerTest : Sequencer_Test;
+    stepManagerTest : StepManagerBasic_Test;
 END_VAR
 ]]></Declaration>
     <Implementation>
