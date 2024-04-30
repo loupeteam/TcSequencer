@@ -57,6 +57,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
 IF NOT _sequence.statusChecked THEN
+	_sequence.statusChecked := TRUE;
     // Cache the abort so there's a consistent status for the whole state
     _sequence.isError := _sequence.activeTasks.isError;
     _sequence.isAbort := _sequence.activeTasks.isAbort;
@@ -312,7 +313,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-IF _sequence.activeTasks.IsAbort OR _sequence.activeTasks.IsError THEN
+IF IsAbort OR IsError THEN
     //On failure will not set the step if a more specific handler already set the step
     IF _sequence.errorHandled = FALSE AND nextStep >= 0 THEN
         LogMessage(1, 'Step Failure');
@@ -334,7 +335,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-IF _sequence.activeTasks.IsDone THEN
+IF IsDone THEN
     IF nextStep >= 0 THEN
         LogMessage(1, 'Step Success');
         setNextStep(nextStep);
