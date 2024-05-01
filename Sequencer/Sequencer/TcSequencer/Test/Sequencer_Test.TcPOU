@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_Sequencer_Test" Id="{5528d32b-0dad-48bc-b63b-5f76dadd2ea9}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Sequencer_Test EXTENDS FB_TestSuite
+  <POU Name="Sequencer_Test" Id="{5528d32b-0dad-48bc-b63b-5f76dadd2ea9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Sequencer_Test EXTENDS FB_TestSuite
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -122,7 +122,7 @@ END_VAR
 
 TEST('OnSuccess');
 
-	//sequencer.i_sequence.activeTasks
+	//sequencer._sequence.activeTasks
 	// next step negative
 	//sequencer.setNextStep(-1);
 	//sequencer.onSuccess(-1);
@@ -149,7 +149,7 @@ TEST('Start');
 	// activeTasks.Start) = 0
 	// TODO
 	
-	//output := sequencer.i_sequence.startStep
+	//output := sequencer._sequence.startStep
 	
 	
 TEST_FINISHED();]]></ST>
