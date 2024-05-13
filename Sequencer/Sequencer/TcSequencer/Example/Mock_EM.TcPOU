@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Mock_EM" Id="{2fbe5d7f-06dd-041a-2d03-5fb4cef27abb}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK Mock_EM IMPLEMENTS IMOCK_EM
+VAR_INPUT
+  TimeUp : TIME;
+  TimeDown : TIME;
+END_VAR
+VAR
+  _MoveUp : PLCopenCommand;
+  _MoveDown : PLCopenCommand;
+  _HeightGroup : PLCopenCommandGroup := (commands := [_MoveUp, _MoveDown, 18(0)]); 
+  t : TON;
+  Up : BOOL;
+  Down : BOOL;
+  Up_ : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+IF _MoveDown.Consume THEN
+
+  t(IN := FALSE);
+  t(IN := TRUE, PT := TimeDown);
+  Up_ := FALSE;
+  Up := FALSE;
+  Down := FALSE;
+
+END_IF
+
+IF _MoveUp.Consume THEN
+
+  t(IN := FALSE);
+  t(IN := TRUE, PT := TimeUp);
+  Up_ := TRUE;
+  Up := FALSE;
+  Down := FALSE;
+
+END_IF
+
+t();
+
+IF t.Q THEN
+
+  t(IN := FALSE);
+
+  IF Up_ THEN
+    Up := TRUE;
+	_MoveUp.Finished();
+  ELSE
+    Down := TRUE;
+	_MoveDown.Finished();
+  END_IF
+
+END_IF
+]]></ST>
+    </Implementation>
+    <Method Name="MoveDown" Id="{85d33885-fdbf-0e70-0029-961e4e4e3914}">
+      <Declaration><![CDATA[
+METHOD MoveDown : BOOL
+VAR_INPUT
+  Status : IPLCopenCall;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+Status.Start(_MoveDown);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MoveUp" Id="{e89b83fa-e799-0cf1-2121-19445f61c4de}">
+      <Declaration><![CDATA[
+METHOD MoveUp : BOOL
+VAR_INPUT
+  Status : IPLCopenCall;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+Status.Start(_MoveUp);
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

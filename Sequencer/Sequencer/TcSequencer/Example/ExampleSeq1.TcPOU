@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ExampleSeq1" Id="{0b7420e2-7bee-0073-13f1-581e54ae5023}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ExampleSeq1 EXTENDS Sequencer
+VAR_INPUT
+	em1 : IMOCK_EM;
+	em2 : IMOCK_EM;
+	em3 : IMOCK_EM;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE DoStep() OF
+
+	0:
+		IF OnEntry() THEN
+			RequestStep( 1 );			
+		END_IF
+
+	1: 
+		IF OnEntry() THEN
+			em1.MoveDown(THIS^);
+		END_IF	
+
+		OnSuccess(2);
+	2:
+
+		IF OnEntry() THEN
+			em1.MoveUp(THIS^);
+			em2.MoveUp(THIS^);
+			em3.MoveUp(THIS^);			
+		END_IF
+	
+		OnSuccess(3);
+		
+	3:		
+				
+		IF OnEntry() THEN
+			em1.MoveDown(THIS^);
+			em2.MoveDown(THIS^);
+			em3.MoveUp(THIS^);			
+		END_IF
+	
+		
+		IF OnSuccess(-1) THEN
+
+			SequenceComplete();			
+
+		END_IF
+		
+END_CASE
+
+IF OnError(-1) THEN
+	SequenceError(-1, 'General error');
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

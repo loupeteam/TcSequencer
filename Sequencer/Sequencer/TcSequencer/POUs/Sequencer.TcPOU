@@ -1,26 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Sequencer" Id="{6cce11bf-bf75-4b96-8542-c7369e25211e}" SpecialFunc="None">
-    <Declaration><![CDATA[
-FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPLCopenCall, IPlugin, IPLCopenCommand
+    <Declaration><![CDATA[FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPLCopenCall, IPlugin, IPLCopenCommand
+VAR_INPUT	
+  startStep : ENUM;
+END_VAR
 VAR
   _sequence : SequenceType;
   _command : PLCopenCommand;
-  startStep : ENUM;
-  forceStart : BOOL;
-  forceDone : BOOL;
-  forceError : BOOL;
-  baseManager : StepManagerBasic;
+  _baseManager : StepManagerBasic;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-IF THIS^.Consume THEN
-  StartSequence();
-END_IF
-]]></ST>
+      <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.]]></ST>
     </Implementation>
     <Folder Name="API" Id="{939f7e8c-9d25-4182-9029-745e8da56e72}">
       <Folder Name="Decisions" Id="{877b3894-7f7e-462b-b8bc-c682c2070163}" />
@@ -126,8 +118,8 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-IF forceStart THEN
-  forceStart := FALSE;
+
+IF THIS^.Consume THEN
   _sequence.stepHandler._RequestStep(startStep);
 END_IF
 
@@ -208,7 +200,7 @@ END_VAR
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
 IF stepHandler = 0 THEN
-  _sequence.stepHandler := baseManager;
+  _sequence.stepHandler := _baseManager;
 ELSE
   _sequence.stepHandler := stepHandler;
 END_IF
@@ -288,22 +280,24 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[
+// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
 // Check all of the status to see if we are aborting
 
 IF IsAbort THEN
 
-    IF nextStep >= 0 THEN
-        LogMessage(1, 'Step Abort');
-        _sequence.errorHandled := TRUE;
-        setNextStep(nextStep);
-    END_IF
+  IF nextStep >= 0 THEN
+    LogMessage(1, 'Step Abort');
+    _sequence.errorHandled := TRUE;
+    setNextStep(nextStep);
+  END_IF
 
-    OnAbort := TRUE;
+  OnAbort := TRUE;
 ELSE
-    OnAbort := FALSE;
-END_IF]]></ST>
+  OnAbort := FALSE;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{d5293258-9127-40f2-8767-4af37daea8dd}" FolderPath="API\StateTransition\">
@@ -557,7 +551,7 @@ _sequence.stepHandler._SequenceError();
 _sequence.activeTasks.ResetCommands();
 _sequence.onExit := TRUE;
 Aborted();
-]]></ST>
+SequenceAbort := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SequenceComplete" Id="{f1ae842d-4867-4029-a65e-180592997a50}" FolderPath="API\StateControl\">
@@ -574,14 +568,14 @@ _sequence.stepHandler._SequenceComplete();
 _sequence.activeTasks.ResetCommands();
 _sequence.onExit := TRUE;
 Finished();
-]]></ST>
+SequenceComplete := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SequenceError" Id="{06555983-6dc8-4375-b176-7e8590c26dcd}" FolderPath="API\StateControl\">
       <Declaration><![CDATA[
 METHOD SequenceError : BOOL
 VAR_INPUT
-  ErrorCode : DINT;
+  ErrorCode : INT;
   ErrorMessage : STRING;
 END_VAR
 ]]></Declaration>
@@ -593,6 +587,7 @@ _sequence.stepHandler._SequenceError();
 _sequence.activeTasks.ResetCommands();
 _sequence.onExit := TRUE;
 Errored(ErrorCode);
+SequenceError := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
@@ -639,13 +634,17 @@ END_IF
       <Declaration><![CDATA[
 METHOD StartSequence : BOOL
 VAR_INPUT
+	Status : IPLCopenCall;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-RequestStep(startStep);
+IF Status <> 0 THEN
+	Status.Start(_command);
+ELSE
+	_command.Execute := TRUE;
+END_IF
 ]]></ST>
       </Implementation>
     </Method>

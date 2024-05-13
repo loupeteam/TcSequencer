@@ -47,6 +47,7 @@ TEST_FINISHED();]]></ST>
 VAR
     sequencer : Sequencer(0);
     outputVal : BOOL;
+	Command : PLCopenCommand;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -56,9 +57,12 @@ END_VAR
 
 TEST('SequenceOnAbort');
 	sequencer.RequestStep(1);
-	sequencer.SequenceAbort(0, 'Error message');
-	sequencer.Run();
-	outputVal := sequencer.OnAbort(1);
+	sequencer.DoStep();
+	sequencer.Start(Command);
+	Command.Execute := TRUE;
+	IF sequencer.OnAbort(-1) THEN
+		outputVal := sequencer.SequenceAbort(1, 'Command aborted');
+	END_IF
 	AssertTrue(Condition := outputVal, Message := 'Abort should be true');
 TEST_FINISHED();]]></ST>
       </Implementation>
@@ -79,7 +83,7 @@ END_VAR]]></Declaration>
 
 TEST('OnEntry');
 	
-	sequencer.StartSequence();
+	sequencer.StartSequence(0);
 	sequencer.DoStep();
 	AssertTrue(Condition := sequencer.onEntry(), Message := 'onEntry should evaluate TRUE on first pass through a new step');
 	sequencer.DoStep();
@@ -93,6 +97,7 @@ TEST_FINISHED();]]></ST>
 VAR
     sequencer : Sequencer(0);
     outputVal : BOOL;
+	Command : PLCopenCommand;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -102,9 +107,13 @@ END_VAR
 
 TEST('SequenceOnError');
 	sequencer.RequestStep(1);
-	sequencer.SequenceError(0, 'Test Error');
-	sequencer.Run();
-	outputVal := sequencer.OnError(1);
+	sequencer.DoStep();
+	sequencer.Start(Command);
+	Command.Errored(1);
+	IF sequencer.OnError(1) THEN
+		outputVal := sequencer.SequenceError(0, 'Test Error');
+	END_IF
+
 	AssertTrue(Condition := outputVal, Message := 'Error should be true');
 TEST_FINISHED();]]></ST>
       </Implementation>

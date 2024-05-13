@@ -19,7 +19,7 @@
     <Company>Loupe</Company>
     <Released>false</Released>
     <Title>TcSequencer</Title>
-    <ProjectVersion>0.0.4</ProjectVersion>
+    <ProjectVersion>0.0.5</ProjectVersion>
     <CombineIds>true</CombineIds>
     <LibraryCategories>
       <LibraryCategory xmlns="">
@@ -37,6 +37,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\SEQUENCE_STEP.TcTLEO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Example\ExampleProg1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Example\ExampleSeq1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Example\IMOCK_EM.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Example\Mock_EM.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Interfaces\ISequence.TcIO">
@@ -68,6 +80,7 @@
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
     <Folder Include="Interfaces" />
+    <Folder Include="Example" />
     <Folder Include="Test" />
     <Folder Include="POUs" />
   </ItemGroup>
