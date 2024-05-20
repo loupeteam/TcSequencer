@@ -8,6 +8,8 @@ END_VAR
 VAR
   _sequence : SequenceType;
   _command : PLCopenCommand;
+  _activeTasks : PLCopenCallGroup;
+  _stepHandler : IStepManager;
   _baseManager : StepManagerBasic;
 END_VAR
 ]]></Declaration>
@@ -52,12 +54,6 @@ AbortPreviousCommands := _command.AbortPreviousCommands(newCommand);
     <Method Name="CheckStatus" Id="{6b7c3f12-8739-4096-9480-9fa604b0d507}" FolderPath="PLCopenCaller\">
       <Declaration><![CDATA[
 METHOD PRIVATE CheckStatus : BOOL
-VAR
-  _commandIndex : INT;
-  _anyAbort : BOOL;
-  _anyBusy : BOOL;
-  _anyError : BOOL;
-END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
@@ -66,9 +62,9 @@ END_VAR
 IF NOT _sequence.statusChecked THEN
   _sequence.statusChecked := TRUE;
   // Cache the abort so there's a consistent status for the whole state
-  _sequence.isError := _sequence.activeTasks.IsError;
-  _sequence.isAbort := _sequence.activeTasks.IsAbort;
-  _sequence.isDone := _sequence.activeTasks.IsDone;
+  _sequence.isError := _activeTasks.IsError;
+  _sequence.isAbort := _activeTasks.IsAbort;
+  _sequence.isDone := _activeTasks.IsDone;
 END_IF
 ]]></ST>
       </Implementation>
@@ -103,7 +99,7 @@ PROPERTY CurrentStep : ENUM
           <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-CurrentStep := _sequence.stepHandler.currentStep;
+CurrentStep := _stepHandler.currentStep;
 ]]></ST>
         </Implementation>
       </Get>
@@ -120,16 +116,16 @@ END_VAR
 
 
 IF THIS^.Consume THEN
-  _sequence.stepHandler._RequestStep(startStep);
+  _stepHandler._RequestStep(startStep);
 END_IF
 
-_sequence.currentStep := _sequence.stepHandler.currentStep;
+_sequence.currentStep := _stepHandler.currentStep;
 
 //If the current step has changed,
 //	Set the flag for onEntry()
-IF _sequence.stepHandler.RequestNumber <> _sequence.lastRequestNumber THEN
+IF _stepHandler.RequestNumber <> _sequence.lastRequestNumber THEN
 
-  _sequence.lastRequestNumber := _sequence.stepHandler.RequestNumber;
+  _sequence.lastRequestNumber := _stepHandler.RequestNumber;
   _sequence.onEntry := TRUE;
   _sequence.onExit := FALSE;
 ELSE
@@ -200,9 +196,9 @@ END_VAR
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
 IF stepHandler = 0 THEN
-  _sequence.stepHandler := _baseManager;
+  _stepHandler := _baseManager;
 ELSE
-  _sequence.stepHandler := stepHandler;
+  _stepHandler := stepHandler;
 END_IF
 ]]></ST>
       </Implementation>
@@ -303,9 +299,6 @@ END_IF
     <Method Name="OnEntry" Id="{d5293258-9127-40f2-8767-4af37daea8dd}" FolderPath="API\StateTransition\">
       <Declaration><![CDATA[
 METHOD OnEntry : BOOL
-VAR
-  sequencer : Sequencer(0);
-END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
@@ -342,11 +335,7 @@ END_IF
       </Implementation>
     </Method>
     <Method Name="OnExit" Id="{f59d2d40-7d9d-447e-9f98-0b5c912393f5}" FolderPath="API\StateTransition\">
-      <Declaration><![CDATA[
-METHOD OnExit : BOOL
-VAR
-  sequencer : Sequencer(0);
-END_VAR
+      <Declaration><![CDATA[METHOD OnExit : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
@@ -460,7 +449,7 @@ METHOD ReportAborted : BOOL
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_sequence.activeTasks.ReportAborted();
+_activeTasks.ReportAborted();
 ]]></ST>
       </Implementation>
     </Method>
@@ -475,7 +464,7 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_sequence.activeTasks.ReportErrored(ID);
+_activeTasks.ReportErrored(ID);
 ]]></ST>
       </Implementation>
     </Method>
@@ -487,7 +476,7 @@ METHOD ReportFinished : BOOL
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_sequence.activeTasks.ReportFinished();
+_activeTasks.ReportFinished();
 ]]></ST>
       </Implementation>
     </Method>
@@ -502,7 +491,7 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_sequence.stepHandler._RequestStep(nextStep);
+_stepHandler._RequestStep(nextStep);
 _sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
@@ -519,7 +508,7 @@ END_VAR
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
 RequestStep(nextStep);
-_sequence.activeTasks.ResetCommands();
+_activeTasks.ResetCommands();
 ]]></ST>
       </Implementation>
     </Method>
@@ -547,8 +536,8 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_sequence.stepHandler._SequenceError();
-_sequence.activeTasks.ResetCommands();
+_stepHandler._SequenceError();
+_activeTasks.ResetCommands();
 _sequence.onExit := TRUE;
 Aborted();
 SequenceAbort := TRUE;]]></ST>
@@ -564,8 +553,8 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_sequence.stepHandler._SequenceComplete();
-_sequence.activeTasks.ResetCommands();
+_stepHandler._SequenceComplete();
+_activeTasks.ResetCommands();
 _sequence.onExit := TRUE;
 Finished();
 SequenceComplete := FALSE;]]></ST>
@@ -583,8 +572,8 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_sequence.stepHandler._SequenceError();
-_sequence.activeTasks.ResetCommands();
+_stepHandler._SequenceError();
+_activeTasks.ResetCommands();
 _sequence.onExit := TRUE;
 Errored(ErrorCode);
 SequenceError := TRUE;
@@ -602,7 +591,7 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_sequence.stepHandler._RequestStep(nextStep);
+_stepHandler._RequestStep(nextStep);
 ]]></ST>
       </Implementation>
     </Method>
@@ -612,15 +601,12 @@ METHOD Start : BOOL
 VAR_INPUT
   Command : IPLCopenCommand;
 END_VAR
-VAR
-  _commandIndex : INT;
-END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-IF _sequence.activeTasks.Start(Command) = 0 THEN
+IF _activeTasks.Start(Command) = 0 THEN
   // TODO: All out of commands.. Throw an error
   sequenceError(10000, 'Too Many Commands in 1 step');
   Start := FALSE;

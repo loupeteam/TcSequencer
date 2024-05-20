@@ -16,9 +16,6 @@
         isAbort : BOOL;
         isError : BOOL;
 
-        stepHandler : IStepManager;
-        activeTasks : PLCopenCallGroup;
-
         errorHandled : BOOL;
 
     END_STRUCT
