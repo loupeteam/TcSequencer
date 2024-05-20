@@ -10,7 +10,7 @@ END_VAR
 VAR
   _MoveUp : PLCopenCommand;
   _MoveDown : PLCopenCommand;
-  _HeightGroup : PLCopenCommandGroup := (commands := [_MoveUp, _MoveDown, 18(0)]); 
+  _HeightGroup : PLCopenExclusiveGroup := (commands := [_MoveUp, _MoveDown, 18(0)]); 
   t : TON;
   Up : BOOL;
   Down : BOOL;

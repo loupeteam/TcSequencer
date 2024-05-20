@@ -97,7 +97,7 @@ END_VAR
     <Method Name="StartSequence" Id="{1cd7451d-fc48-48da-b2a6-3f2d996e06ee}">
       <Declaration><![CDATA[METHOD StartSequence : BOOL
 VAR_INPUT
-	Status : IPLCopenCall;
+	Status : IPLCopenCaller;
 END_VAR
 ]]></Declaration>
     </Method>

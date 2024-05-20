@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Sequencer" Id="{6cce11bf-bf75-4b96-8542-c7369e25211e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPLCopenCall, IPlugin, IPLCopenCommand
+    <Declaration><![CDATA[FUNCTION_BLOCK Sequencer IMPLEMENTS ISequence, IPlugin, IPLCopenCommand, IPLCopenCall
 VAR_INPUT	
   startStep : ENUM;
+  Command : SequenceCommand;
 END_VAR
 VAR
   _sequence : SequenceType;
-  _command : PLCopenCommand;
   _activeTasks : PLCopenCallGroup;
   _stepHandler : IStepManager;
   _baseManager : StepManagerBasic;
@@ -21,18 +21,18 @@ END_VAR
       <Folder Name="StateControl" Id="{6abf5737-70bc-45fb-a397-53c0f97ae526}" />
       <Folder Name="StateTransition" Id="{4654304c-709e-4a34-bdc7-0fda0c88f45a}" />
     </Folder>
-    <Folder Name="Internal" Id="{e6aa5ed2-3892-4dae-8fd4-cfebc470258a}" />
-    <Folder Name="PLCopenCaller" Id="{692cb7d4-90ad-40a3-84ed-e86faabe0e62}" />
+    <Folder Name="Internal" Id="{e6aa5ed2-3892-4dae-8fd4-cfebc470258a}">
+      <Folder Name="PLCopenCaller" Id="{692cb7d4-90ad-40a3-84ed-e86faabe0e62}" />
+    </Folder>
     <Folder Name="PLCopenCommand" Id="{fd5ca5cf-6943-410a-b526-e7c52c8742ad}" />
     <Method Name="Aborted" Id="{03503dc0-1791-43ea-b488-bf95491a91d2}" FolderPath="PLCopenCommand\">
       <Declaration><![CDATA[
 METHOD Aborted : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-Aborted := _command.Aborted();
+Aborted := Command.Start.Aborted();
 ]]></ST>
       </Implementation>
     </Method>
@@ -44,14 +44,13 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-AbortPreviousCommands := _command.AbortPreviousCommands(newCommand);
+AbortPreviousCommands := Command.Start.AbortPreviousCommands(newCommand);
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="CheckStatus" Id="{6b7c3f12-8739-4096-9480-9fa604b0d507}" FolderPath="PLCopenCaller\">
+    <Method Name="CheckStatus" Id="{6b7c3f12-8739-4096-9480-9fa604b0d507}" FolderPath="Internal\PLCopenCaller\">
       <Declaration><![CDATA[
 METHOD PRIVATE CheckStatus : BOOL
 ]]></Declaration>
@@ -62,9 +61,9 @@ METHOD PRIVATE CheckStatus : BOOL
 IF NOT _sequence.statusChecked THEN
   _sequence.statusChecked := TRUE;
   // Cache the abort so there's a consistent status for the whole state
-  _sequence.isError := _activeTasks.IsError;
-  _sequence.isAbort := _activeTasks.IsAbort;
-  _sequence.isDone := _activeTasks.IsDone;
+  _sequence.isError := _activeTasks.Error;
+  _sequence.isAbort := _activeTasks.CommandAborted;
+  _sequence.isDone := _activeTasks.Done;
 END_IF
 ]]></ST>
       </Implementation>
@@ -79,10 +78,9 @@ VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-Consume := _command.Consume;
+Consume := Command.Start.Consume;
 ]]></ST>
         </Implementation>
       </Get>
@@ -111,12 +109,11 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
 
-IF THIS^.Consume THEN
-  _stepHandler._RequestStep(startStep);
+IF Command.Start.Consume THEN
+  _stepHandler.RequestStep(startStep);
 END_IF
 
 _sequence.currentStep := _stepHandler.currentStep;
@@ -157,10 +154,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-Errored := _command.Errored(ID);
+Errored := Command.Start.Errored(ID);
 ]]></ST>
       </Implementation>
     </Method>
@@ -168,21 +164,38 @@ Errored := _command.Errored(ID);
       <Declaration><![CDATA[
 PROPERTY Execute : BOOL
 ]]></Declaration>
+      <Get Name="Get" Id="{adad7ecf-0850-0195-0426-885bc2440a11}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
       <Set Name="Set" Id="{b2c36421-446f-4102-bef9-982b63dbf2f6}">
         <Declaration><![CDATA[
 VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+          <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_command.Execute := Execute;
+Command.Start.Execute := Execute;
 ]]></ST>
         </Implementation>
       </Set>
     </Property>
-    <Method Name="FB_init" Id="{f87966c2-0adb-4c01-87f6-71b336bb9cc0}">
+    <Method Name="ExecuteWithStatus" Id="{78094dbb-db1f-004e-2eba-97499b6b1937}" FolderPath="PLCopenCommand\">
+      <Declaration><![CDATA[METHOD ExecuteWithStatus : BOOL
+VAR_INPUT
+	remote	: TcCommando.IPLCopenCallRemote;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Command.Start.ExecuteWithStatus(remote);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{f87966c2-0adb-4c01-87f6-71b336bb9cc0}" FolderPath="Internal\">
       <Declaration><![CDATA[
 METHOD FB_init : BOOL
 VAR_INPUT
@@ -208,14 +221,13 @@ END_IF
 METHOD Finished : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-Finished := _command.Finished();
+Finished := Command.Start.Finished();
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="IsAbort" Id="{dbaf10d5-3866-4d96-b10f-98bd3ccf9a22}" FolderPath="PLCopenCaller\">
+    <Property Name="IsAbort" Id="{dbaf10d5-3866-4d96-b10f-98bd3ccf9a22}" FolderPath="Internal\PLCopenCaller\">
       <Declaration><![CDATA[
 PROPERTY IsAbort : BOOL
 ]]></Declaration>
@@ -232,7 +244,7 @@ IsAbort := _sequence.isAbort;
         </Implementation>
       </Get>
     </Property>
-    <Property Name="IsDone" Id="{0abb87b3-c33c-4d5b-bab6-668ee8ff9e26}" FolderPath="PLCopenCaller\">
+    <Property Name="IsDone" Id="{0abb87b3-c33c-4d5b-bab6-668ee8ff9e26}" FolderPath="Internal\PLCopenCaller\">
       <Declaration><![CDATA[
 PROPERTY IsDone : BOOL
 ]]></Declaration>
@@ -249,7 +261,7 @@ IsDone := _sequence.isDone;
         </Implementation>
       </Get>
     </Property>
-    <Property Name="IsError" Id="{45d11189-3838-46ca-97d2-70f9988c183a}" FolderPath="PLCopenCaller\">
+    <Property Name="IsError" Id="{45d11189-3838-46ca-97d2-70f9988c183a}" FolderPath="Internal\PLCopenCaller\">
       <Declaration><![CDATA[
 PROPERTY IsError : BOOL
 ]]></Declaration>
@@ -406,13 +418,13 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-RegisterGroup := _command.RegisterGroup(group);
+RegisterGroup := Command.Start.RegisterGroup(group);
 ]]></ST>
       </Implementation>
     </Method>
     <Property Name="Remote" Id="{1baaa5db-8663-490c-a646-fa9e05570894}" FolderPath="PLCopenCommand\">
       <Declaration><![CDATA[
-PROPERTY Remote : IPLCopenCall
+PROPERTY Remote : IPLCopenCallRemote
 ]]></Declaration>
       <Get Name="Get" Id="{fcb1f48e-bcf9-4ced-abb1-06b16eacc58a}">
         <Declaration><![CDATA[
@@ -423,7 +435,7 @@ END_VAR
           <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-Remote := _command.Remote;
+Remote := Command.Start.Remote;
 ]]></ST>
         </Implementation>
       </Get>
@@ -436,50 +448,11 @@ END_VAR
           <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_command.Remote := Remote;
+Command.Start.Remote := Remote;
 ]]></ST>
         </Implementation>
       </Set>
     </Property>
-    <Method Name="ReportAborted" Id="{3f9d2e0d-58ab-0b84-071f-1e7bb5e506a9}" FolderPath="PLCopenCaller\">
-      <Declaration><![CDATA[
-METHOD ReportAborted : BOOL
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-_activeTasks.ReportAborted();
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ReportErrored" Id="{4ad715dd-6434-022f-3066-d31ac0f61c60}" FolderPath="PLCopenCaller\">
-      <Declaration><![CDATA[
-METHOD ReportErrored : BOOL
-VAR_INPUT
-  ID : INT;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-_activeTasks.ReportErrored(ID);
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ReportFinished" Id="{adb61844-9a44-0e09-02c8-18bd1d080885}" FolderPath="PLCopenCaller\">
-      <Declaration><![CDATA[
-METHOD ReportFinished : BOOL
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-_activeTasks.ReportFinished();
-]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="RequestStep" Id="{b48e0562-c987-4989-8061-de7cf0c6fe2a}" FolderPath="API\StateControl\">
       <Declaration><![CDATA[
 METHOD RequestStep : BOOL
@@ -488,10 +461,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_stepHandler._RequestStep(nextStep);
+_stepHandler.RequestStep(nextStep);
 _sequence.onExit := TRUE;
 ]]></ST>
       </Implementation>
@@ -508,11 +480,11 @@ END_VAR
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
 RequestStep(nextStep);
-_activeTasks.ResetCommands();
+_activeTasks.ResetStatus();
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Run" Id="{77a6af61-d3f7-4c0a-b1d9-a63defd9e3b9}">
+    <Method Name="Run" Id="{77a6af61-d3f7-4c0a-b1d9-a63defd9e3b9}" FolderPath="Internal\">
       <Declaration><![CDATA[
 METHOD Run : BOOL
 ]]></Declaration>
@@ -533,11 +505,10 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_stepHandler._SequenceError();
-_activeTasks.ResetCommands();
+_stepHandler.SequenceError();
+_activeTasks.ResetStatus();
 _sequence.onExit := TRUE;
 Aborted();
 SequenceAbort := TRUE;]]></ST>
@@ -553,11 +524,11 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_stepHandler._SequenceComplete();
-_activeTasks.ResetCommands();
+_stepHandler.SequenceComplete();
+_activeTasks.ResetStatus();
 _sequence.onExit := TRUE;
 Finished();
-SequenceComplete := FALSE;]]></ST>
+SequenceComplete := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SequenceError" Id="{06555983-6dc8-4375-b176-7e8590c26dcd}" FolderPath="API\StateControl\">
@@ -572,8 +543,8 @@ END_VAR
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_stepHandler._SequenceError();
-_activeTasks.ResetCommands();
+_stepHandler.SequenceError();
+_activeTasks.ResetStatus();
 _sequence.onExit := TRUE;
 Errored(ErrorCode);
 SequenceError := TRUE;
@@ -588,48 +559,47 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
+        <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-_stepHandler._RequestStep(nextStep);
+_stepHandler.RequestStep(nextStep);
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Start" Id="{52f1f4d2-13d6-46fb-aa1f-c1affcffbade}" FolderPath="PLCopenCaller\">
+    <Method Name="Start" Id="{52f1f4d2-13d6-46fb-aa1f-c1affcffbade}" FolderPath="Internal\PLCopenCaller\">
       <Declaration><![CDATA[
-METHOD Start : BOOL
+METHOD Start : PLCopenStatusBase
 VAR_INPUT
   Command : IPLCopenCommand;
 END_VAR
-]]></Declaration>
+VAR
+	_status : PLCopenStatusBase;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
-
-IF _activeTasks.Start(Command) = 0 THEN
+_status := _activeTasks.Start(Command);
+IF  _status <> PLCopenStatusBase.BUSY THEN
   // TODO: All out of commands.. Throw an error
   sequenceError(10000, 'Too Many Commands in 1 step');
-  Start := FALSE;
-ELSE
-  Start := TRUE;
 END_IF
+Start := _status;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="StartSequence" Id="{3c531c5d-3c1d-4272-888a-ef0a2888f2c8}">
+    <Method Name="StartSequence" Id="{3c531c5d-3c1d-4272-888a-ef0a2888f2c8}" FolderPath="API\">
       <Declaration><![CDATA[
 METHOD StartSequence : BOOL
 VAR_INPUT
-	Status : IPLCopenCall;
+	Status : IPLCopenCaller;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 IF Status <> 0 THEN
-	Status.Start(_command);
+	Status.Start(Command.Start);
 ELSE
-	_command.Execute := TRUE;
+	Command.Start.Execute := TRUE;
 END_IF
 ]]></ST>
       </Implementation>
@@ -647,7 +617,7 @@ END_VAR
           <ST><![CDATA[
 // Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-Status := _command.Status;
+Status := Command.Start.Status;
 ]]></ST>
         </Implementation>
       </Get>
