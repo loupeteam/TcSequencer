@@ -11,8 +11,8 @@ END_VAR]]></Declaration>
       <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 ]]></ST>
     </Implementation>
-    <Property Name="CurrentStep" Id="{29f4d86c-54a1-42a1-8dae-2fa8be71c206}">
-      <Declaration><![CDATA[PROPERTY CurrentStep : ENUM
+    <Property Name="CurrentStepImpl" Id="{29f4d86c-54a1-42a1-8dae-2fa8be71c206}">
+      <Declaration><![CDATA[PROPERTY CurrentStepImpl : ENUM
 ]]></Declaration>
       <Get Name="Get" Id="{6ff7d4db-2de2-41e3-931f-d828caaa0f1f}">
         <Declaration><![CDATA[VAR
@@ -21,13 +21,13 @@ END_VAR
         <Implementation>
           <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-CurrentStep := _CurrentStep;]]></ST>
+CurrentStepImpl := _CurrentStep;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="RequestNumber" Id="{56d18034-f9ba-490e-94ec-3c8b604cd6b0}">
+    <Property Name="RequestNumberImpl" Id="{56d18034-f9ba-490e-94ec-3c8b604cd6b0}">
       <Declaration><![CDATA[{warning 'add property implementation'}
-PROPERTY RequestNumber : DINT
+PROPERTY RequestNumberImpl : DINT
 ]]></Declaration>
       <Get Name="Get" Id="{3d104d88-59e8-4239-891c-6b40240640ee}">
         <Declaration><![CDATA[VAR
@@ -36,12 +36,12 @@ END_VAR
         <Implementation>
           <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
-RequestNumber := _requestNumber;]]></ST>
+RequestNumberImpl := _requestNumber;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="RequestStep" Id="{631d6933-a3d4-4a04-8d8b-2defab756516}">
-      <Declaration><![CDATA[METHOD RequestStep : BOOL
+    <Method Name="RequestStepImpl" Id="{631d6933-a3d4-4a04-8d8b-2defab756516}">
+      <Declaration><![CDATA[METHOD RequestStepImpl : BOOL
 VAR_INPUT
     nextStep : ENUM;
 END_VAR]]></Declaration>
@@ -52,8 +52,8 @@ _requestNumber := _requestNumber + 1;
 _currentStep := nextStep;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Reset" Id="{fb88c2f8-268f-48f3-8ad4-521cc35aeb3a}">
-      <Declaration><![CDATA[METHOD Reset : BOOL
+    <Method Name="ResetImpl" Id="{fb88c2f8-268f-48f3-8ad4-521cc35aeb3a}">
+      <Declaration><![CDATA[METHOD ResetImpl : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
@@ -61,8 +61,8 @@ _currentStep := nextStep;]]></ST>
 _currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SequenceComplete" Id="{ff6a8092-1516-4df4-b57d-1bb9d4d5c97b}">
-      <Declaration><![CDATA[METHOD SequenceComplete : BOOL
+    <Method Name="SequenceCompleteImpl" Id="{ff6a8092-1516-4df4-b57d-1bb9d4d5c97b}">
+      <Declaration><![CDATA[METHOD SequenceCompleteImpl : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
@@ -71,9 +71,12 @@ _requestNumber := _requestNumber + 1;
 _currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SequenceError" Id="{a9f4d538-abc7-4246-9047-1ad6d24ed996}">
-      <Declaration><![CDATA[METHOD SequenceError : BOOL
-]]></Declaration>
+    <Method Name="SequenceErrorImpl" Id="{a9f4d538-abc7-4246-9047-1ad6d24ed996}">
+      <Declaration><![CDATA[METHOD SequenceErrorImpl : BOOL
+VAR_INPUT
+  ErrorCode : INT;
+  ErrorMessage : STRING;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 

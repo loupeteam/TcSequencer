@@ -29,8 +29,8 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('RequestStep');
-	stepManager.RequestStep(2);
-	AssertEquals_UDINT(Expected := 2, Actual := stepManager.currentStep, 'Current Step shall be requested step');
+	stepManager.RequestStepImpl(2);
+	AssertEquals_UDINT(Expected := 2, Actual := stepManager.CurrentStepImpl, 'Current Step shall be requested step');
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
@@ -46,11 +46,11 @@ END_VAR
 (*STweep.Disable*)
 
 TEST('Reset');
-	stepManager.RequestStep(20);
-	AssertEquals_UDINT(Expected := 20, Actual := stepManager.currentStep, 'Confirm current step is not default');
+	stepManager.RequestStepImpl(20);
+	AssertEquals_UDINT(Expected := 20, Actual := stepManager.CurrentStepImpl, 'Confirm current step is not default');
 	
-	stepManager.Reset();
-	AssertEquals_UDINT(Expected := SEQUENCE_STEP.NO_STEP, Actual := stepManager.currentStep, 'Reset should have put current step back to default');
+	stepManager.ResetImpl();
+	AssertEquals_UDINT(Expected := SEQUENCE_STEP.NO_STEP, Actual := stepManager.CurrentStepImpl, 'Reset should have put current step back to default');
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
