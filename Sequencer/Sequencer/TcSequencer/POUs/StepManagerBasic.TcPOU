@@ -74,9 +74,10 @@ _currentStep := SEQUENCE_STEP.NO_STEP;]]></ST>
     <Method Name="SequenceErrorImpl" Id="{a9f4d538-abc7-4246-9047-1ad6d24ed996}">
       <Declaration><![CDATA[METHOD SequenceErrorImpl : BOOL
 VAR_INPUT
-  ErrorCode : INT;
-  ErrorMessage : STRING;
-END_VAR]]></Declaration>
+    ErrorCode : INT;
+    ErrorMessage : STRING;
+END_VAR
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Copyright (c) 2024 Loupe (https://loupe.team), provided under the MIT License.
 
