@@ -89,14 +89,22 @@ END_VAR
     <Method Name="SequenceError" Id="{efd40ff7-83f9-47af-a16c-c4732fe53c27}" FolderPath="StateControl\">
       <Declaration><![CDATA[METHOD SequenceError : BOOL
 VAR_INPUT
-    ErrorCode : DINT;
+    ErrorCode : INT;
     ErrorMessage : STRING;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetStepManager" Id="{5efbbda1-bc0e-472d-a818-288d5222df56}">
+      <Declaration><![CDATA[METHOD SetStepManager : BOOL
+VAR_INPUT
+	manager : IStepManager;
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="StartSequence" Id="{1cd7451d-fc48-48da-b2a6-3f2d996e06ee}">
       <Declaration><![CDATA[METHOD StartSequence : BOOL
 VAR_INPUT
+	Status : IPLCopenCaller;
 END_VAR
 ]]></Declaration>
     </Method>

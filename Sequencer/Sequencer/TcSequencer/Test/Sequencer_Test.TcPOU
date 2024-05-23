@@ -17,7 +17,8 @@ OnEntry();
 CurrentAndRequestStep();]]></ST>
     </Implementation>
     <Method Name="CurrentAndRequestStep" Id="{00c73c39-e570-45cb-8831-bed7304ddd26}">
-      <Declaration><![CDATA[METHOD CurrentAndRequestStep
+      <Declaration><![CDATA[{attribute 'no-analysis'}
+METHOD CurrentAndRequestStep
 VAR
     sequencer : Sequencer(0);
     Command : PLCopenCommand();
@@ -43,10 +44,12 @@ TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnAbort" Id="{756190d0-8aa4-4061-8aca-7e61a0ad15cd}">
-      <Declaration><![CDATA[METHOD OnAbort
+      <Declaration><![CDATA[{attribute 'no-analysis'}
+METHOD OnAbort
 VAR
     sequencer : Sequencer(0);
     outputVal : BOOL;
+	Command : PLCopenCommand;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -56,15 +59,19 @@ END_VAR
 
 TEST('SequenceOnAbort');
 	sequencer.RequestStep(1);
-	sequencer.SequenceAbort(0, 'Error message');
-	sequencer.Run();
-	outputVal := sequencer.OnAbort(1);
+	sequencer.DoStep();
+	sequencer.Start(Command);
+	Command.Execute := TRUE;
+	IF sequencer.OnAbort(-1) THEN
+		outputVal := sequencer.SequenceAbort(1, 'Command aborted');
+	END_IF
 	AssertTrue(Condition := outputVal, Message := 'Abort should be true');
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{3a0279ba-27ed-47d6-a39c-8c9f7c30b3c2}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[{attribute 'no-analysis'}
+METHOD OnEntry
 VAR_INPUT
 END_VAR
 
@@ -79,7 +86,7 @@ END_VAR]]></Declaration>
 
 TEST('OnEntry');
 	
-	sequencer.StartSequence();
+	sequencer.StartSequence(0);
 	sequencer.DoStep();
 	AssertTrue(Condition := sequencer.onEntry(), Message := 'onEntry should evaluate TRUE on first pass through a new step');
 	sequencer.DoStep();
@@ -89,10 +96,13 @@ TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnError" Id="{ceefdcc0-adb1-4ad8-928a-8e1e77a9bfee}">
-      <Declaration><![CDATA[METHOD OnError
+      <Declaration><![CDATA[{attribute 'no-analysis'}
+{attribute 'no-analysis'}
+METHOD OnError
 VAR
     sequencer : Sequencer(0);
     outputVal : BOOL;
+	Command : PLCopenCommand;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -102,15 +112,20 @@ END_VAR
 
 TEST('SequenceOnError');
 	sequencer.RequestStep(1);
-	sequencer.SequenceError(0, 'Test Error');
-	sequencer.Run();
-	outputVal := sequencer.OnError(1);
+	sequencer.DoStep();
+	sequencer.Start(Command);
+	Command.Errored(1);
+	IF sequencer.OnError(1) THEN
+		outputVal := sequencer.SequenceError(0, 'Test Error');
+	END_IF
+
 	AssertTrue(Condition := outputVal, Message := 'Error should be true');
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnSuccess" Id="{6a55c547-d864-42a2-86db-036e6aa1ad13}">
-      <Declaration><![CDATA[METHOD OnSuccess
+      <Declaration><![CDATA[{attribute 'no-analysis'}
+METHOD OnSuccess
 VAR_INPUT
     sequencer : Sequencer(0);
 END_VAR
@@ -134,7 +149,8 @@ TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Start" Id="{3d524a28-168c-402c-a8b1-706368e2797f}">
-      <Declaration><![CDATA[METHOD Start
+      <Declaration><![CDATA[{attribute 'no-analysis'}
+METHOD Start
 VAR
     sequencer : Sequencer(0);
     output : BOOL;

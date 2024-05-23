@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ExampleProg1" Id="{ef79d040-ac9a-075e-0ecb-cf80cda435b7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ExampleProg1
+VAR
+
+	Cylinder1 : Mock_EM := (TimeUp:= T#3S, TimeDown:= T#3S);		
+	Cylinder2 : Mock_EM := (TimeUp:= T#1S, TimeDown:= T#1S);
+	Cylinder3 : Mock_EM := (TimeUp:= T#8S, TimeDown:= T#1S);
+	Seq1 :	ExampleSeq1(0) := (em1:=Cylinder1, em2:=Cylinder2, em3:=Cylinder3);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Cylinder1();
+Cylinder2();
+Cylinder3();
+
+Seq1();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

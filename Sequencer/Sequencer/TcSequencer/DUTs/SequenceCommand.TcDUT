@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="SequenceCommand" Id="{5f5128e9-4988-0cd7-37c1-c51312994c6b}">
+    <Declaration><![CDATA[TYPE SequenceCommand :
+STRUCT
+	Start : PLCopenCommand;
+	Stop : PLCopenCommand;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="IMOCK_EM" Id="{ef49eb67-0dd3-08ee-1676-40a85245db25}">
+    <Declaration><![CDATA[INTERFACE IMOCK_EM
+]]></Declaration>
+    <Method Name="MoveDown" Id="{c1097bb8-4cd7-0965-2bad-c28e059eadf2}">
+      <Declaration><![CDATA[
+METHOD MoveDown : BOOL
+VAR_INPUT
+  Status : IPLCopenCall;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="MoveUp" Id="{b592d131-cbee-0403-212c-bb26ab20fc93}">
+      <Declaration><![CDATA[
+METHOD MoveUp : BOOL
+VAR_INPUT
+  Status : IPLCopenCall;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

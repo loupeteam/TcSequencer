@@ -7,6 +7,9 @@
     <PouCall>
       <Name>TESTPRG</Name>
     </PouCall>
+    <PouCall>
+      <Name>ExampleProg1</Name>
+    </PouCall>
     <TaskFBGuid>{4cd0da51-1b2f-4144-a490-9fdce30adf94}</TaskFBGuid>
     <Fb_init>{a07683cb-0bbc-40c5-9013-3975ddd93290}</Fb_init>
     <Fb_exit>{c915b013-bf2d-47e3-a454-81902059cacd}</Fb_exit>
